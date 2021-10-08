@@ -1,0 +1,15 @@
+DEBUG:jieba:Building prefix dict from the default dictionary ...
+DEBUG:jieba:Loading model from cache C:\Users\admin\AppData\Local\Temp\jieba.cache
+DEBUG:jieba:Loading model cost 0.640 seconds.
+DEBUG:jieba:Prefix dict has been built successfully.
+DEBUG:jieba:Building prefix dict from the default dictionary ...
+DEBUG:jieba:Loading model from cache C:\Users\admin\AppData\Local\Temp\jieba.cache
+DEBUG:jieba:Loading model cost 0.544 seconds.
+DEBUG:jieba:Prefix dict has been built successfully.
+DEBUG:jieba:Building prefix dict from the default dictionary ...
+DEBUG:jieba:Loading model from cache C:\Users\admin\AppData\Local\Temp\jieba.cache
+DEBUG:jieba:Loading model cost 0.558 seconds.
+DEBUG:jieba:Prefix dict has been built successfully.
+Number of articles per HSK level:
+{'HSK1': 403, 'HSK2': 453, 'HSK3': 1705, 'HSK4': 17462, 'HSK5': 48837, 'HSK6': 6384}
+Total time: 46.77970683972041 min

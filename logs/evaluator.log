@@ -1,0 +1,10 @@
+INFO:root:Number of articles per HSK level: 
+INFO:root:{'HSK1': 403, 'HSK2': 453, 'HSK3': 1705, 'HSK4': 17462, 'HSK5': 48837, 'HSK6': 6384}
+INFO:root:Number of discarded articles: 
+INFO:root:1553
+INFO:root:Total time: 14.733779509862265 min
+INFO:root:Number of articles per HSK level: 
+INFO:root:{'HSK1': 403, 'HSK2': 453, 'HSK3': 1705, 'HSK4': 17462, 'HSK5': 48837, 'HSK6': 6384}
+INFO:root:Number of discarded articles: 
+INFO:root:1553
+INFO:root:Total time: 19.944724361101787 min
