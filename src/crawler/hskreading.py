@@ -12,7 +12,7 @@ driver = webdriver.Chrome("../../chromedriver")#, options=options)
 output_file = '../../output/crawler/hskreading.csv'
 
 with open(output_file, 'w', newline='\n', encoding='utf-8') as f:
-    f.write('id,HSK_level,URL,Title_EN,Title_ZH,Description,Content\n')
+    f.write('id\tHSK_level\tURL\tTitle_EN\tTitle_ZH\tDescription\tcontent\n')
 
 
 for category in ['https://hskreading.com/beginner/', 'https://hskreading.com/intermediate/', 'https://hskreading.com/advanced/']:
@@ -43,7 +43,7 @@ for category in ['https://hskreading.com/beginner/', 'https://hskreading.com/int
                     break
 
             with open(output_file, 'a', newline='\n', encoding='utf-8') as f:
-                f.write(f'{article_id},{level},{url},{title_en},{title_zh},{description},{content}\n')
+                f.write(f'{article_id}\t{level}\t{url}\t{title_en}\t{title_zh}\t{description}\t{content}\n')
 
             driver.close()
             driver.switch_to.window(driver.window_handles[0])
