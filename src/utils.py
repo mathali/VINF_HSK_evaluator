@@ -42,6 +42,23 @@ def get_grammar(g_directory='../data/grammar'):
     return grammar_df
 
 
+def filter_grammar(g_directory='../data/grammar'):
+    file_names = next(walk(g_directory), (None, None, []))[2]
+
+    grammar = []
+    for file in file_names[1:]:
+        grammar.append(pd.read_csv(g_directory+'/'+file, header=None))
+
+    structures = pd.DataFrame(columns=['HSK_level', 'structure'])
+    for ind, df in enumerate(grammar):
+        temp_df = pd.DataFrame({'HSK_level': ind + 1,
+                                'structure': df[5].drop_duplicates().map(lambda x: x.lstrip('::').rstrip('::')).str.split("+")
+                                })
+        structures = pd.concat([structures, temp_df])
+
+    structures.to_csv('../data/grammar/filtered_grammar.csv')
+
+
 def split_file(file='D:/Dokumenty/FIIT/ing/1.semester/VINF/new2016zh/news2016zh_train.json',
                lines=True,
                chunk_size=50000):
@@ -57,4 +74,4 @@ def split_file(file='D:/Dokumenty/FIIT/ing/1.semester/VINF/new2016zh/news2016zh_
 
 
 if __name__ == '__main__':
-    split_file()
+    filter_grammar()
