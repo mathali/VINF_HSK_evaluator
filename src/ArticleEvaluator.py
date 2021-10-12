@@ -33,18 +33,6 @@ def evaluate_articles(articles, hsk_dict, output_file='../output/evaluated_artic
     else:
         levels = pool.map(hsk_level_dict, articles)
 
-    # if not eval:
-    #     with open(output_file, 'w', newline='\n', encoding='utf-8') as f:
-    #         f.write('id,HSK_level,Time,Source,Title,Content\n')
-    #     pool = mp.Pool(mp.cpu_count())
-    #     hsk_level_dict = partial(__get_hsk_level, hsk_dict=hsk_dict, output_file=output_file, eval=eval)
-    #     levels = pool.map(hsk_level_dict, articles)
-    # else:
-    #     with open(output_file, 'w', newline='\n', encoding='utf-8') as f:
-    #         f.write('id,Labeled Level,Evaluated Level\n')
-    #     for article in articles:
-    #         levels = __get_hsk_level(article, hsk_dict, output_file, True)
-
     discarded_articles = 0
 
     for level in levels:

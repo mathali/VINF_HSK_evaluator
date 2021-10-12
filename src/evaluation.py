@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 # @click.argument('get_levels', default=False)
 def main(get_levels):
     if get_levels:
-        articles = get_articles('../data/hskreading_tab.csv', eval=True)
+        articles = get_articles('../data/hskreading_tab.csv', csv=True, delimiter='\t')
         hsk_dict = get_hsk_dict()
 
         start = time.time()
