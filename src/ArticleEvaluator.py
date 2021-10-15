@@ -53,7 +53,7 @@ def __get_hsk_level(article, hsk_dict, output_file, eval=False):
             article = article[1]
         seg_list = pseg.cut(article['content'])
 
-        seg_list = [x for x in seg_list if x.flag not in ['x', 'eng']]
+        seg_list = [x for x in seg_list if x.flag not in ['x', 'eng', 'm']]
         level_count = {
             1: 0,
             2: 0,
