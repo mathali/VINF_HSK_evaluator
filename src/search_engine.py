@@ -10,8 +10,7 @@ from collections import Counter
 
 def create_index():
     index = {}
-    # TODO: Find source of field number warnings -> maybe \t in text
-    articles = pd.read_csv(open('../output/showcase/evaluated_articles_1000.csv', errors='replace', encoding='utf8'),
+    articles = pd.read_csv(open('../output/showcase/evaluated_articles_fixed.csv', errors='replace', encoding='utf8'),
                            delimiter='\t',
                            on_bad_lines='warn')
 
@@ -36,7 +35,7 @@ def create_index():
 
     end = time.time()
     print(f'Duration: {(end-start)/60} min')
-    with open('../output/showcase/inverted_index_test.json', 'w') as f:
+    with open('../output/showcase/inverted_index_fixed.json', 'w') as f:
         json.dump(index, f)
 
 
@@ -66,7 +65,7 @@ def cosine_similarity(article, seg_phrase, output):
 def text_search(phrase='我你好', mode='u', size='sample'):
     if size == 'sample':
         index_file = '../output/showcase/inverted_index_test.json'
-        articles_file = '../output/showcase/evaluated_articles_1000.csv'
+        articles_file = '../output/showcase/evaluated_articles_fixed.csv'
     else:
         index_file = '../output/full_sample/inverted_index.json'
         articles_file = '../output/full_sample/evaluated_articles_new.csv'
