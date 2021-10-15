@@ -6,7 +6,7 @@ from functools import partial
 import pandas as pd
 
 
-def evaluate_articles(articles, hsk_dict, output_file='../output/evaluated_articles_test.csv', eval=False):
+def evaluate_articles(articles, hsk_dict, output_file='../output/showcase/evaluated_articles_1000.csv', eval=False):
     # TODO : method to generate / retrieve list of grammar rules?
     article_difficulties = {
         'HSK1': 0,
@@ -29,7 +29,10 @@ def evaluate_articles(articles, hsk_dict, output_file='../output/evaluated_artic
     hsk_level_dict = partial(__get_hsk_level, hsk_dict=hsk_dict, output_file=output_file, eval=eval)
 
     if isinstance(articles, pd.DataFrame):
-        levels = pool.map(hsk_level_dict, articles[:1000].iterrows())
+        levels = []
+        for ind, article in articles[:1000].iterrows():
+            levels.append(__get_hsk_level(article, hsk_dict, output_file))
+        # levels = pool.map(hsk_level_dict, articles[:1000].iterrows())
     else:
         levels = pool.map(hsk_level_dict, articles[:1000])
 
@@ -77,7 +80,7 @@ def __get_hsk_level(article, hsk_dict, output_file, eval=False):
             ratio = current_count / total_level
 
         if not eval:
-            article['content'].replace('\t', ' ')
+            article['content'] = article['content'].replace('\t', ' ').replace('\n', '')
             f.write(f"{article['news_id']}\t{current_level}\t{article['time']}\t{article['source']}\t{article['title']}\t{article['content']}\n")
         else:
             f.write(f"{article['id']}\t{article['HSK_level']}\t{current_level}\n")
