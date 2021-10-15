@@ -1,0 +1,21 @@
+b'Skipping line 58: expected 6 fields, saw 11\nSkipping line 1490: expected 6 fields, saw 11\nSkipping line 2521: expected 6 fields, saw 11\nSkipping line 6753: expected 6 fields, saw 11\nSkipping line 12189: expected 6 fields, saw 11\nSkipping line 12216: expected 6 fields, saw 11\nSkipping line 12226: expected 6 fields, saw 11\nSkipping line 12463: expected 6 fields, saw 11\nSkipping line 22178: expected 6 fields, saw 11\nSkipping line 26071: expected 6 fields, saw 10\nSkipping line 27575: expected 6 fields, saw 11\nSkipping line 31473: expected 6 fields, saw 11\nSkipping line 39420: expected 6 fields, saw 11\nSkipping line 42551: expected 6 fields, saw 11\nSkipping line 50173: expected 6 fields, saw 11\nSkipping line 50813: expected 6 fields, saw 11\nSkipping line 57276: expected 6 fields, saw 11\nSkipping line 60723: expected 6 fields, saw 11\nSkipping line 65154: expected 6 fields, saw 11\n'
+Processed 0 articles
+Building prefix dict from the default dictionary ...
+Loading model from cache C:\Users\admin\AppData\Local\Temp\jieba.cache
+Loading model cost 0.551 seconds.
+Prefix dict has been built successfully.
+Processed 5000 articles
+Processed 10000 articles
+Processed 15000 articles
+Processed 20000 articles
+Processed 25000 articles
+Processed 30000 articles
+Processed 35000 articles
+Processed 40000 articles
+Processed 45000 articles
+Processed 50000 articles
+Processed 55000 articles
+Processed 60000 articles
+Processed 65000 articles
+Processed 70000 articles
+Duration: 181.1936171332995 min

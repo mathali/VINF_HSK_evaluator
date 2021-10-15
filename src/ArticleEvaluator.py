@@ -6,7 +6,7 @@ from functools import partial
 import pandas as pd
 
 
-def evaluate_articles(articles, hsk_dict, output_file='../output/evaluated_articles.csv', eval=False):
+def evaluate_articles(articles, hsk_dict, output_file='../output/evaluated_articles_test.csv', eval=False):
     # TODO : method to generate / retrieve list of grammar rules?
     article_difficulties = {
         'HSK1': 0,
@@ -21,17 +21,17 @@ def evaluate_articles(articles, hsk_dict, output_file='../output/evaluated_artic
 
     if not eval:
         with open(output_file, 'w', newline='\n', encoding='utf-8') as f:
-            f.write('id,HSK_level,Time,Source,Title,Content\n')
+            f.write('id\tHSK_level\tTime\tSource\tTitle\tContent\n')
     else:
         with open(output_file, 'w', newline='\n', encoding='utf-8') as f:
-            f.write('id,Labeled Level,Evaluated Level\n')
+            f.write('id\tLabeled Level\tEvaluated Level\n')
 
     hsk_level_dict = partial(__get_hsk_level, hsk_dict=hsk_dict, output_file=output_file, eval=eval)
 
     if isinstance(articles, pd.DataFrame):
-        levels = pool.map(hsk_level_dict, articles.iterrows())
+        levels = pool.map(hsk_level_dict, articles[:1000].iterrows())
     else:
-        levels = pool.map(hsk_level_dict, articles)
+        levels = pool.map(hsk_level_dict, articles[:1000])
 
     discarded_articles = 0
 
@@ -77,9 +77,10 @@ def __get_hsk_level(article, hsk_dict, output_file, eval=False):
             ratio = current_count / total_level
 
         if not eval:
-            f.write(f"{article['news_id']},{current_level},{article['time']},{article['source']},{article['title']},{article['content']}\n")
+            article['content'].replace('\t', ' ')
+            f.write(f"{article['news_id']}\t{current_level}\t{article['time']}\t{article['source']}\t{article['title']}\t{article['content']}\n")
         else:
-            f.write(f"{article['id']},{article['HSK_level']},{current_level}\n")
+            f.write(f"{article['id']}\t{article['HSK_level']}\t{current_level}\n")
 
     return current_level
 
