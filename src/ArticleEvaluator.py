@@ -7,7 +7,13 @@ import pandas as pd
 
 
 def evaluate_articles(articles, hsk_dict, output_file='../output/full_sample/evaluated_articles_fixed.csv', eval=False):
-    # TODO : method to generate / retrieve list of grammar rules?
+    """
+    Controller of the evaluation process
+    :param articles: Preloaded list of json dictionaries containing articles + metadata
+    :param hsk_dict: Dictionary containing official HSK ranking for each word
+    :param output_file: Path to file for storing results
+    :param eval: Flag to show if we are working with hskreading.com data
+    """
     article_difficulties = {
         'HSK1': 0,
         'HSK2': 0,
@@ -17,8 +23,7 @@ def evaluate_articles(articles, hsk_dict, output_file='../output/full_sample/eva
         'HSK6': 0,
     }
 
-    pool = mp.Pool(mp.cpu_count())
-
+    # Determine output format
     if not eval:
         with open(output_file, 'w', newline='\n', encoding='utf-8') as f:
             f.write('id\tHSK_level\tTime\tSource\tTitle\tContent\n')
@@ -28,23 +33,28 @@ def evaluate_articles(articles, hsk_dict, output_file='../output/full_sample/eva
 
     hsk_level_dict = partial(__get_hsk_level, hsk_dict=hsk_dict)
 
+    # Determines HSK level of each article
+    # Serial processing if data frame, parallel processing if json list
     levels = []
     if isinstance(articles, pd.DataFrame):
-        for ind, article in articles.iterrows():
-            current_level, article = __get_hsk_level(article, hsk_dict, output_file)
-            levels.append(current_level)
-            if eval:
-                f.write(f"{article['id']}\t{article['HSK_level']}\t{current_level}\n")
-        # levels = pool.map(hsk_level_dict, articles[:1000].iterrows())
+        with open(output_file, 'a', newline='\n', encoding='utf-8') as f:
+            for ind, article in articles.iterrows():
+                current_level, article = __get_hsk_level(article, hsk_dict)
+                levels.append(current_level)
+                if eval:
+                    f.write(f"{article['id']}\t{article['HSK_level']}\t{current_level}\n")
     else:
+        pool = mp.Pool(mp.cpu_count())
         with open(output_file, 'a', newline='\n', encoding='utf-8') as f:
             for current_level, article in pool.map(hsk_level_dict, articles, chunksize=50):
                 levels.append(current_level)
                 if current_level != -1:
                     f.write(f"{article['news_id']}\t{current_level}\t{article['time']}\t{article['source']}\t{article['title']}\t{article['content']}\n")
 
+    # Articles are discarded if they don't contain enough HSK graded words
     discarded_articles = 0
 
+    # Determine distribution of levels
     for level in levels:
         if level != -1:
             article_difficulties['HSK' + str(level)] += 1
@@ -55,11 +65,21 @@ def evaluate_articles(articles, hsk_dict, output_file='../output/full_sample/eva
 
 
 def __get_hsk_level(article, hsk_dict):
+    """
+    Determines HSK level based on vocabulary and grammar (WIP)
+    :param article: Article being evaluated
+    :param hsk_dict: Dictionary of HSK graded words
+    :return: HSK level of article, article in question
+    """
     if isinstance(article, tuple):
         article = article[1]
-    seg_list = pseg.cut(article['content'])
 
+    # Use jieba to segment article and remove useless terms - x (punctuation marks etc.), eng ( using latin alphabet),
+    # m ( numbers )
+    seg_list = pseg.cut(article['content'])
     seg_list = [x for x in seg_list if x.flag not in ['x', 'eng', 'm']]
+
+    # Keep track of words from each level for final evaluation
     level_count = {
         1: 0,
         2: 0,
@@ -69,6 +89,7 @@ def __get_hsk_level(article, hsk_dict):
         6: 0,
     }
 
+    # Determine vocabulary and grammar level
     __word_evaluation(seg_list, level_count, hsk_dict)
     # __grammar_evaluation(seg_list, grammar_rules)
 
@@ -79,6 +100,8 @@ def __get_hsk_level(article, hsk_dict):
     if total_level == 0:
         return -1, article
 
+    # If article contains at least 80% of vocabulary from a current HSK level or lower, graded it as current HSK level
+    # Based on 80-20 known-unknown rule for optimal language acquisition
     ratio = current_count / total_level
     while ratio < 0.8:
         current_level += 1
@@ -91,6 +114,13 @@ def __get_hsk_level(article, hsk_dict):
 
 
 def __word_evaluation(seg_list, level_count, hsk_dict):
+    """
+    Dictionary lookup for each word to retrieve its HSK level
+    :param seg_list: Segmented article
+    :param level_count: Dictionary counting words for each level
+    :param hsk_dict: Reference dictionary for lookups 
+    :return:
+    """
     for s in seg_list:
         try:
             level_count[hsk_dict[s.word]] += 1
