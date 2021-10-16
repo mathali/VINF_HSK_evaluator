@@ -118,7 +118,7 @@ def __word_evaluation(seg_list, level_count, hsk_dict):
     Dictionary lookup for each word to retrieve its HSK level
     :param seg_list: Segmented article
     :param level_count: Dictionary counting words for each level
-    :param hsk_dict: Reference dictionary for lookups 
+    :param hsk_dict: Reference dictionary for lookups
     :return:
     """
     for s in seg_list:
