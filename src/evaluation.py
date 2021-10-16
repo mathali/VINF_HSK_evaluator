@@ -1,21 +1,17 @@
 import ArticleEvaluator as ae
 from utils import get_articles, get_hsk_dict
-import time
 import pandas as pd
-import click
 import matplotlib.pyplot as plt
 
 
-# @click.command
-# @click.argument('get_levels', default=False)
-def main(get_levels):
+def evaluate(get_levels=False):
     if get_levels:
         articles = get_articles('../data/hskreading_tab.csv', csv=True, delimiter='\t')
         hsk_dict = get_hsk_dict()
 
         ae.evaluate_articles(articles, hsk_dict, '../output/evaluated_hskreading.csv', True)
 
-    df = pd.read_csv('../output/evaluated_hskreading.csv')
+    df = pd.read_csv('../output/evaluated_hskreading.csv', delimiter='\t')
     exact = df['Labeled Level'] == df['Evaluated Level']
     within_one = abs(df['Labeled Level'] - df['Evaluated Level']) <= 1
     larger = df['Evaluated Level'] > df['Labeled Level']
@@ -59,4 +55,4 @@ def main(get_levels):
 
 
 if __name__ == '__main__':
-    main(False)
+    evaluate(False)

@@ -6,7 +6,10 @@ from functools import partial
 import pandas as pd
 
 
-def evaluate_articles(articles, hsk_dict, output_file='../output/full_sample/evaluated_articles_fixed.csv', eval=False):
+def evaluate_articles(articles,
+                      hsk_dict,
+                      output_file='../output/full_sample/evaluated_articles_fixed.csv',
+                      eval=False):
     """
     Controller of the evaluation process
     :param articles: Preloaded list of json dictionaries containing articles + metadata

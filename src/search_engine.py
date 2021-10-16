@@ -8,7 +8,7 @@ from functools import partial
 from collections import Counter
 
 
-def get_tf(terms):
+def __get_tf(terms):
     """
     Calculates Term frequency with a simple ration of number of occurrences / length of phrase for each word
     :param terms: Segmented phrase
@@ -21,13 +21,13 @@ def get_tf(terms):
         else:
             tf_dict[t] = 1
 
-    for key,value in tf_dict.items():
+    for key, value in tf_dict.items():
         tf_dict[key] = value / len(terms)
 
     return tf_dict
 
 
-def get_idf(index):
+def __get_idf(index):
     """
     Calculates log inverted document frequency. Based on number of keys per entry in inverted index.
     :param index: Inverted index word: docID
@@ -41,7 +41,7 @@ def get_idf(index):
     return idf
 
 
-def create_index_tf_idf():
+def create_index_tf_idf(mode='showcase'):
     """
     Generate inverted index file with TF-IDF weights
     """
@@ -49,7 +49,7 @@ def create_index_tf_idf():
 
     # Load articles processed by ArticleEvaluator.py
     articles = pd.read_csv(
-        open('../output/showcase/evaluated_articles_fixed.csv', errors='replace', encoding='utf8'),
+        open(f'../output/{mode}/evaluated_articles_fixed.csv', errors='replace', encoding='utf8'),
         delimiter='\t',
         on_bad_lines='warn')
 
@@ -66,7 +66,7 @@ def create_index_tf_idf():
         terms = [x.word for x in terms if x.flag not in ['x', 'eng', 'm']]
 
         # Calculate Term frequencies for each term in article
-        tf = get_tf(terms)
+        tf = __get_tf(terms)
 
         # Store TF in a proto-index dictionary
         for key, value in tf.items():
@@ -76,7 +76,7 @@ def create_index_tf_idf():
                 index[key] = {ind: value}
 
     # Calculate IDF for each term in proto-index
-    idf = get_idf(index)
+    idf = __get_idf(index)
 
     # Modify index to store proper TF-IDF weight for each term-DocID pairing
     for k1, v1 in index.items():
@@ -86,21 +86,21 @@ def create_index_tf_idf():
     end = time.time()
     print(f'Duration: {(end - start) / 60} min')
     # Store finished inverted-index
-    with open('../output/showcase/inverted_index_tfidf.json', 'w') as f:
+    with open(f'../output/{mode}/inverted_index_tfidf.json', 'w') as f:
         json.dump(index, f)
     # Store IDF for each term to be used during full-text search
-    with open('../output/showcase/idf.json', 'w') as f:
+    with open(f'../output/{mode}/idf.json', 'w') as f:
         json.dump(idf, f)
 
 
-def create_index():
+def create_index(mode='showcase'):
     """
     Creates simple inverted-index based on word counts in articles (without weighing).
     """
     index = {}
 
     # Load articles processed by ArticleEvaluator.py
-    articles = pd.read_csv(open('../output/full_sample/evaluated_articles_fixed.csv', errors='replace', encoding='utf8'),
+    articles = pd.read_csv(open(f'../output/{mode}/evaluated_articles_fixed.csv', errors='replace', encoding='utf8'),
                            delimiter='\t',
                            on_bad_lines='warn')
 
@@ -129,11 +129,11 @@ def create_index():
     end = time.time()
     print(f'Duration: {(end-start)/60} min')
     # Store inverted-index for later use
-    with open('../output/full_sample/inverted_index_fixed.json', 'w') as f:
+    with open(f'../output/{mode}/inverted_index_fixed.json', 'w') as f:
         json.dump(index, f)
 
 
-def cosine_similarity(article, seg_phrase, output, idf=None, idf_flag=False):
+def __cosine_similarity(article, seg_phrase, output, idf=None, idf_flag=False):
     """
     Calculate cosine similarity to determine the closeness of article to search query
     :param article: Body of text to be evaluated
@@ -151,11 +151,11 @@ def cosine_similarity(article, seg_phrase, output, idf=None, idf_flag=False):
 
     # Create vectors used in similarity calculation. Either TF-IDF or count based.
     if idf_flag:
-        d1 = get_tf(seg_phrase)
+        d1 = __get_tf(seg_phrase)
         for key, value in d1.items():
             d1[key] = value * idf[key]
 
-        d2 = get_tf(seg_article)
+        d2 = __get_tf(seg_article)
         for key, value in d2.items():
             d2[key] = value * idf[key]
     else:
@@ -254,13 +254,13 @@ def text_search(phrase='我你好', mode='and', size='sample', idf_flag=False):
     if no_matches < 200:
         doc_similarities = {}
         for doc in match:
-            doc_similarities[doc] = cosine_similarity(articles.iloc[doc], seg_phrase, None, idf, idf_flag)
+            doc_similarities[doc] = __cosine_similarity(articles.iloc[doc], seg_phrase, None, idf, idf_flag)
     # Parallelize similarity calculations for large number of articles
     else:
         pool = mp.Pool(mp.cpu_count())
         manager = mp.Manager()
         doc_similarities = manager.dict()
-        cosine_partial = partial(cosine_similarity, seg_phrase=seg_phrase, output=doc_similarities, idf=idf, idf_flag=idf_flag)
+        cosine_partial = partial(__cosine_similarity, seg_phrase=seg_phrase, output=doc_similarities, idf=idf, idf_flag=idf_flag)
 
         pool.map(cosine_partial, articles.iloc[list(match)].iterrows())
 
