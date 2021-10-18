@@ -8,12 +8,12 @@ from selenium.common.exceptions import TimeoutException, NoSuchElementException
 def crawl():
     options = webdriver.ChromeOptions()
     options.add_argument("headless")
-    driver = webdriver.Chrome("../../chromedriver")#, options=options)
+    driver = webdriver.Chrome("../chromedriver")#, options=options)
 
-    output_file = '../../output/crawler/hskreading.csv'
+    output_file = '../output/crawler/hskreading_new.csv'
 
     with open(output_file, 'w', newline='\n', encoding='utf-8') as f:
-        f.write('id\tHSK_level\tURL\tTitle_EN\tTitle_ZH\tDescription\tcontent\n')
+        f.write('id\tHSK_level\tURL\tTitle_EN\tTitle_ZH\tDescription\tContent\n')
 
     # Browse all articles on the hskreading website. Beginner - HSK1 2, intermediate - HSK3 4, advanced - HSK5 6
     for category in ['https://hskreading.com/beginner/', 'https://hskreading.com/intermediate/', 'https://hskreading.com/advanced/']:
@@ -28,9 +28,12 @@ def crawl():
                 WebDriverWait(driver, 60).until(EC.presence_of_element_located((By.TAG_NAME, "article")))
 
                 # Extract metadata about article
-                level = article.find_element_by_xpath(".//*[@rel='category tag']").text.split(' ')[1]
-                title_en = article.find_element_by_tag_name("a").text
-                url = article.find_element_by_tag_name("a").get_attribute('href')
+                for anchor in article.find_elements_by_tag_name("a"):
+                    if 'category' in anchor.get_attribute('href'):
+                        level = anchor.text.split(' ')[1]
+                    elif 'author' not in anchor.get_attribute('href'):
+                        title_en = anchor.text
+                        url = anchor.get_attribute('href')
 
                 # Open article in new winow to access content
                 driver.execute_script("window.open('');")
@@ -44,10 +47,10 @@ def crawl():
                 post = driver.find_element_by_class_name("post-content")
                 heading = post.find_element_by_tag_name("h2")
                 title_zh = heading.text.replace('\n', '')
-                children = post.find_elements_by_xpath("./*")
+                children = post.find_elements_by_css_selector("div.post-content>*")
                 description = children[0].text.replace('\n', '')
                 content = ""
-                for child in children[1:]:
+                for child in children[2:]:
                     if child.tag_name == 'p':
                         content += child.text.replace('\n', '')     # Clean article so it can be stored in csv
                     elif child.tag_name == 'input':
@@ -63,7 +66,7 @@ def crawl():
 
             # Explore all pages of articles in category
             try:
-                driver.find_element_by_xpath("//*[@rel='next']").click()
+                driver.find_element_by_class_name("pagination-next").click()
             except NoSuchElementException:
                 break
 
