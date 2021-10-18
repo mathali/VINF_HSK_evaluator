@@ -63,3 +63,13 @@ INFO:root:{'HSK1': 352, 'HSK2': 402, 'HSK3': 1542, 'HSK4': 16024, 'HSK5': 49023,
 INFO:root:Number of discarded articles: 
 INFO:root:1609
 INFO:root:Total time: 16.170147681236266 min
+INFO:root:Number of articles per HSK level: 
+INFO:root:{'HSK1': 3, 'HSK2': 9, 'HSK3': 22, 'HSK4': 195, 'HSK5': 661, 'HSK6': 92}
+INFO:root:Number of discarded articles: 
+INFO:root:18
+INFO:root:Total time: 0.20340687036514282 min
+INFO:root:Number of articles per HSK level: 
+INFO:root:{'HSK1': 3, 'HSK2': 9, 'HSK3': 22, 'HSK4': 195, 'HSK5': 661, 'HSK6': 92}
+INFO:root:Number of discarded articles: 
+INFO:root:18
+INFO:root:Total time: 0.2115460236867269 min

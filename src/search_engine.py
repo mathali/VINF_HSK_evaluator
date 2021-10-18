@@ -86,10 +86,10 @@ def create_index_tf_idf(mode='showcase'):
     end = time.time()
     print(f'Duration: {(end - start) / 60} min')
     # Store finished inverted-index
-    with open(f'../output/{mode}/inverted_index_tfidf.json', 'w') as f:
+    with open(f'../output/demonstration/{mode}/inverted_index_tfidf.json', 'w') as f:
         json.dump(index, f)
     # Store IDF for each term to be used during full-text search
-    with open(f'../output/{mode}/idf.json', 'w') as f:
+    with open(f'../output/demonstration/{mode}/idf.json', 'w') as f:
         json.dump(idf, f)
 
 
@@ -100,7 +100,7 @@ def create_index(mode='showcase'):
     index = {}
 
     # Load articles processed by ArticleEvaluator.py
-    articles = pd.read_csv(open(f'../output/{mode}/evaluated_articles_fixed.csv', errors='replace', encoding='utf8'),
+    articles = pd.read_csv(open(f'../output/demonstration/{mode}/evaluated_articles_fixed.csv', errors='replace', encoding='utf8'),
                            delimiter='\t',
                            on_bad_lines='warn')
 
@@ -129,7 +129,7 @@ def create_index(mode='showcase'):
     end = time.time()
     print(f'Duration: {(end-start)/60} min')
     # Store inverted-index for later use
-    with open(f'../output/{mode}/inverted_index_fixed.json', 'w') as f:
+    with open(f'../output/demonstration/{mode}/inverted_index_fixed.json', 'w') as f:
         json.dump(index, f)
 
 
@@ -203,7 +203,10 @@ def text_search(phrase='我你好', mode='and', size='sample', idf_flag=False):
         articles_file = '../output/showcase/evaluated_articles_fixed.csv'
         idf_file = '../output/showcase/idf.json'
     else:
-        index_file = '../output/full_sample/inverted_index_fixed.json'
+        if idf_flag:
+            index_file = '../output/full_sample/inverted_index_tfidf.json'
+        else:
+            index_file = '../output/full_sample/inverted_index_fixed.json'
         articles_file = '../output/full_sample/evaluated_articles_fixed.csv'
         idf_file = '../output/full_sample/idf.json'
 

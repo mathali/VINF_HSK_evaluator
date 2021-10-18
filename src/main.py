@@ -13,10 +13,10 @@ def process_articles(sample):
 
     articles = get_articles()
     if sample:
-        output = '../output/showcase/evaluated_articles_fixed.csv'
+        output = '../output/demonstration/evaluated_articles_fixed.csv'
         articles = articles[:1000]
     else:
-        output = '../output/full_sample/evaluated_articles_fixed.csv'
+        output = '../output/demonstration/evaluated_articles_fixed.csv'
 
     hsk_dict = get_hsk_dict()
 
@@ -59,7 +59,8 @@ def main(function, levels, sample, mode, size, flag):
     if function == 'p':
         if sample == 'True':
             process_articles(True)
-        process_articles(False)
+        else:
+            process_articles(False)
     elif function == 'i':
         if size:
             se.create_index(size)
