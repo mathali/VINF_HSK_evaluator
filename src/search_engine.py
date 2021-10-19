@@ -27,7 +27,7 @@ def __get_tf(terms):
     return tf_dict
 
 
-def __get_idf(index):
+def __get_idf(index, N):
     """
     Calculates log inverted document frequency. Based on number of keys per entry in inverted index.
     :param index: Inverted index word: docID
@@ -36,7 +36,7 @@ def __get_idf(index):
     idf = {}
     for key, value in index.items():
         df = len(value.keys())
-        idf[key] = np.log(len(index.keys())/df)
+        idf[key] = np.log(N/df)
 
     return idf
 
@@ -76,12 +76,12 @@ def create_index_tf_idf(mode='showcase'):
                 index[key] = {ind: value}
 
     # Calculate IDF for each term in proto-index
-    idf = __get_idf(index)
+    idf = __get_idf(index, len(articles))
 
     # Modify index to store proper TF-IDF weight for each term-DocID pairing
     for k1, v1 in index.items():
         for k2, v2 in v1.items():
-            v1[k2] = round(v2 * idf[k1], 2)
+            v1[k2] = round(v2 * idf[k1], 3)
 
     end = time.time()
     print(f'Duration: {(end - start) / 60} min')
