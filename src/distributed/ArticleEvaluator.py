@@ -72,7 +72,7 @@ def main():
                                            levels[6]))
 
     # out.toDF().groupBy('_2').count().show()
-    out = out.toDF().select(col('_1').alias('news_id'), col('_2').alias('level'), col('_3').alias('source'),
+    out = out.toDF().select(col('_1').alias('news_id'), col('_2').alias('level'), col('_3').alias('time'),
                             col('_4').alias('source'), col('_5').alias('title'), col('_6').alias('keywords'),
                             col('_7').alias('desc'))
 
