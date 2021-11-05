@@ -1,5 +1,7 @@
 import time
 import jieba.posseg as pseg
+from pyspark.sql.functions import col
+
 import utils
 
 
@@ -45,13 +47,36 @@ def main():
     articles = utils.get_articles(spark)
     hsk_map = utils.get_hsk_dict(spark)
 
-    # articles = articles.limit(1000)
+    articles = articles.limit(1000)
 
-    out = articles.rdd.map(lambda article: (article['news_id'], [x.word for x in pseg.cut(article['content']) if x.flag not in ['x', 'eng', 'm']])) \
-                      .map(lambda words: (words[0], [map_levels(word, hsk_map) for word in words[1]])) \
-                      .map(lambda levels: (levels[0],evaluate(levels[1])))
+    out = articles.rdd.map(lambda article: (article['news_id'],
+                                            [x.word for x in pseg.cut(article['content']) if x.flag not in ['x', 'eng', 'm']],
+                                            article['time'],
+                                            article['source'],
+                                            article['title'],
+                                            article['keywords'],
+                                            article['desc'])) \
+                      .map(lambda words: (words[0],
+                                          [map_levels(word, hsk_map) for word in words[1]],
+                                          words[2],
+                                          words[3],
+                                          words[4],
+                                          words[5],
+                                          words[6])) \
+                      .map(lambda levels: (levels[0],
+                                           evaluate(levels[1]),
+                                           levels[2],
+                                           levels[3],
+                                           levels[4],
+                                           levels[5],
+                                           levels[6]))
 
-    out.toDF().groupBy('_2').count().show()
+    # out.toDF().groupBy('_2').count().show()
+    out = out.toDF().select(col('_1').alias('news_id'), col('_2').alias('level'), col('_3').alias('source'),
+                            col('_4').alias('source'), col('_5').alias('title'), col('_6').alias('keywords'),
+                            col('_7').alias('desc'))
+
+    out.toPandas().to_csv('../../output/full_sample/distributed/test.csv', index=False, sep='\t')
 
 
 if __name__ == '__main__':

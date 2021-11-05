@@ -51,7 +51,7 @@ def setup_spark():
     os.environ["PYSPARK_PYTHON"] = sys.executable
 
     spark = SparkSession.builder \
-        .master("local[8]") \
+        .master("local[10]") \
         .appName("ArticleEvaluator") \
         .getOrCreate()
 
