@@ -1,7 +1,7 @@
 import json
 import ast
 import sys
-
+import pandas as pd
 from pyspark.sql.types import StructType, StructField, StringType, LongType, ArrayType, ShortType
 from pyspark.sql import functions as f, SparkSession
 from os import walk
@@ -28,6 +28,7 @@ def get_articles(spark, mode='valid'):
         parquet_file.createOrReplaceTempView('articlesParquet')
         return spark.sql('SELECT * FROM articlesParquet LIMIT 150000')
 
+
 def create_parquet(spark, original):
     dest = original.split('/')
     name = dest[-1].split('.')[0]
@@ -45,8 +46,6 @@ def create_parquet(spark, original):
             StructField('title', StringType(), True),
         ])
         org_file = spark.read.json(original, schema=article_schema)
-        # print(org_file.take(10))
-        # org_file.save(path + '/' + name + '.parquet', 'parquet')
         org_file.write.parquet(path + '/' + name + '.parquet')
 
 
@@ -84,14 +83,6 @@ def setup_spark():
         .getOrCreate()
 
     return spark
-    # conf = spark.sparkContext._conf.setAll([('spark.executor.memory', '8g'),
-    #                                         ('spark.app.name', 'ArticleEvaluator'),
-    #                                         ('spark.executor.cores', '12'),
-    #                                         ('spark.cores.max', '12'),
-    #                                         ('spark.driver.memory', '6g')])
-    #
-    # spark.sparkContext.stop()
-    # return SparkSession.builder.config(conf=conf).getOrCreate()
 
 
 def get_grammar(g_directory='../data/grammar'):

@@ -3,12 +3,12 @@ import time
 import lucene
 
 from java.nio.file import Paths
-from org.apache.lucene.analysis.standard import StandardAnalyzer
 from org.apache.lucene.analysis.cn.smart import SmartChineseAnalyzer
 from org.apache.lucene.document import Document, Field, FieldType
 from org.apache.lucene.index import (IndexOptions, IndexWriter,
                                      IndexWriterConfig)
 from org.apache.lucene.store import MMapDirectory
+
 
 env = lucene.initVM(vmargs=['-Djava.awt.headless=true'])
 fsDir = MMapDirectory(Paths.get('train_index'))
@@ -33,7 +33,6 @@ with open('../../output/full_sample/distributed/evaluated_train.csv') as article
     for row in articles:
         if not head:
             fields = row.replace('\n', '').split('\t')
-            #fields = ['news_id', 'level', 'time', 'source', 'title', 'keywords', 'desc']
             head = True
         else:
             doc = Document()
