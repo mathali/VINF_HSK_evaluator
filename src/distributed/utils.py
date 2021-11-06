@@ -8,8 +8,33 @@ from os import walk
 import os
 
 
-def get_articles(spark, eval_set=False):
-    if not eval_set:
+def get_articles(spark, mode='valid'):
+    article_schema = StructType([
+        StructField('content', StringType(), True),
+        StructField('desc', StringType(), True),
+        StructField('keywords', StringType(), True),
+        StructField('news_id', StringType(), True),
+        StructField('source', StringType(), True),
+        StructField('time', StringType(), True),
+        StructField('title', StringType(), True),
+    ])
+
+    if mode == 'valid':
+        return spark.read.json('../../data/new2016zh/news2016zh_train.json', schema=article_schema)
+    elif mode == 'train':
+        parquet_file = spark.read.format('parquet')\
+                                 .schema(article_schema)\
+                                 .load('../../data/new2016zh/news2016zh_train.parquet')
+        parquet_file.createOrReplaceTempView('articlesParquet')
+        return spark.sql('SELECT * FROM articlesParquet LIMIT 150000')
+
+def create_parquet(spark, original):
+    dest = original.split('/')
+    name = dest[-1].split('.')[0]
+    format = dest[-1].split('.')[1]
+    path = '/'.join(dest[:-1])
+
+    if format == 'json':
         article_schema = StructType([
             StructField('content', StringType(), True),
             StructField('desc', StringType(), True),
@@ -19,7 +44,10 @@ def get_articles(spark, eval_set=False):
             StructField('time', StringType(), True),
             StructField('title', StringType(), True),
         ])
-        return spark.read.json('../../data/new2016zh/news2016zh_valid.json', schema=article_schema)
+        org_file = spark.read.json(original, schema=article_schema)
+        # print(org_file.take(10))
+        # org_file.save(path + '/' + name + '.parquet', 'parquet')
+        org_file.write.parquet(path + '/' + name + '.parquet')
 
 
 def get_hsk_dict(spark):

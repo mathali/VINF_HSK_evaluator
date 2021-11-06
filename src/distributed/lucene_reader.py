@@ -19,10 +19,9 @@ INDEXDIR = "./index"
 
 def luceneRetriver(query):
     env = lucene.initVM(vmargs=['-Djava.awt.headless=true'])
-    fsDir = MMapDirectory(Paths.get('index'))
+    fsDir = MMapDirectory(Paths.get('train_index'))
     lucene_analyzer = SmartChineseAnalyzer()
-    # lucene_searcher = IndexSearcher(indir)
-    # my_query = QueryParser(Version.LUCENE_30, "text", lucene_analyzer).parse(query)
+
     reader = DirectoryReader.open(fsDir)
     searcher = IndexSearcher(reader)
 

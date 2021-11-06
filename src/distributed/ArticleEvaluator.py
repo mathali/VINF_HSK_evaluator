@@ -42,14 +42,15 @@ def map_levels(word, hsk_map):
         return -1
 
 
-def main():
+def main(mode='valid'):
     spark = utils.setup_spark()
-    articles = utils.get_articles(spark)
+    articles = utils.get_articles(spark, mode)
     hsk_map = utils.get_hsk_dict(spark)
 
-    articles = articles.limit(1000)
+    articles = articles.limit(150000)
 
-    out = articles.rdd.map(lambda article: (article['news_id'],
+    out = articles.rdd.repartition(100)\
+                      .map(lambda article: (article['news_id'],
                                             [x.word for x in pseg.cut(article['content']) if x.flag not in ['x', 'eng', 'm']],
                                             article['time'],
                                             article['source'],
@@ -76,12 +77,14 @@ def main():
                             col('_4').alias('source'), col('_5').alias('title'), col('_6').alias('keywords'),
                             col('_7').alias('desc'))
 
-    out.toPandas().to_csv('../../output/full_sample/distributed/test.csv', index=False, sep='\t')
+    out.toPandas().to_csv('../../output/full_sample/distributed/evaluated_train_partitions.csv', index=False, sep='\t')
 
 
 if __name__ == '__main__':
     start = time.time()
-    main()
+    spark = utils.setup_spark()
+    # utils.create_parquet(spark, '../../data/new2016zh/news2016zh_train.json')
+    main('valid')
     end = time.time()
     print(f'Duration: {(end-start)/60} min')
 
