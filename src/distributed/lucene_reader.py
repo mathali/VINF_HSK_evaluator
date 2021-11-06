@@ -26,7 +26,7 @@ def luceneRetriver(query):
     reader = DirectoryReader.open(fsDir)
     searcher = IndexSearcher(reader)
 
-    my_query = QueryParser("text", lucene_analyzer).parse(query)
+    my_query = QueryParser("desc", lucene_analyzer).parse(query)
     MAX = 10
     total_hits = searcher.search(my_query, MAX)
     print("Hits: ", total_hits.totalHits)
@@ -34,7 +34,8 @@ def luceneRetriver(query):
     for hit in total_hits.scoreDocs:
         print("Hit Score: ", hit.score, "Hit Doc:", hit.doc, "Hit String:", hit.toString())
         doc = searcher.doc(hit.doc)
-        print(doc.get("text").encode("utf-8"))
+        print(doc.get('desc'))
+        #print(doc.get("level").encode("utf-8"))
 
 
-luceneRetriver("1")
+luceneRetriver("个")

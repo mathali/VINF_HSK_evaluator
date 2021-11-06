@@ -12,6 +12,7 @@ env = lucene.initVM(vmargs=['-Djava.awt.headless=true'])
 fsDir = MMapDirectory(Paths.get('index'))
 writerConfig = IndexWriterConfig(SmartChineseAnalyzer())
 writer = IndexWriter(fsDir, writerConfig)
+writer.deleteAll()
 print(f"{writer.getPendingNumDocs()} docs found in index")
 
 
@@ -21,7 +22,7 @@ t1.setStored(True)
 t1.setIndexOptions(IndexOptions.DOCS)
 
 t2 = FieldType()
-t2.setStored(False)
+t2.setStored(True)
 t2.setIndexOptions(IndexOptions.DOCS_AND_FREQS)
 
 with open('../../output/full_sample/distributed/test.csv') as articles:
@@ -33,6 +34,7 @@ with open('../../output/full_sample/distributed/test.csv') as articles:
             head = True
         else:
             doc = Document()
+            row = row.replace('\n', '').split('\t')
             for field in range(len(fields)):
                 if fields[field] in ['news_id', 'time', 'source', 'title']:
                     t = t1
@@ -50,3 +52,4 @@ with open('../../output/full_sample/distributed/test.csv') as articles:
 # writer.addDocument(doc)
 print(f"{writer.getPendingNumDocs()} docs found in index")
 writer.commit()
+writer.close()
