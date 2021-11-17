@@ -1,0 +1,779 @@
+	HSK_level	structure
+0	1	 Subj. + 在 + Verb + Obj. 
+5	1	 Subj. + 正在 + Verb + Obj. 
+9	1	 没 + 有 (+ Obj.) 
+25	1	 Subj. + 不 + Verb + Obj. 
+31	1	 Subj. + 不 + Adj. 
+36	1	 Subj. + 都 + [Verb Phrase] 
+46	1	 Subj. + 也 + Verb / [Verb Phrase] 
+56	1	 Subj. + 也 (+ Adv.) + Adj. 
+70	1	 Subj. + 多 + Adj. ? 
+80	1	 Subj. + 不太 + Adj. 
+85	1	 Subj. + 不太 + Verb 
+90	1	 Noun 1 + 和 + Noun 2 
+98	1	 Time / Verb + 以后, .... 
+108	1	 Time / Verb + 以前 ，⋯⋯ 
+118	1	 Subj. + Time + Verb + Obj. / Time + Subj. + Verb + Obj. 
+128	1	 Subj. + Number + 岁 
+134	1	 Subj. + Number + 岁 + 半 
+136	1	 Number + 个 + Noun 
+137	1	 Verb + 个 + Noun 
+142	1	 x 年 + y 月 + z （日 /  号）
+151	1	 x 点 零 y 分 
+156	1	 x 点 y 分 
+162	1	 Hour + 点 + 差 + Minutes + 分 
+166	1	 (Date and/or time of day +) x 点 
+172	1	 x 点 + 半 
+177	1	 Pronoun + Noun 
+187	1	 Subj. + Verb + 了 
+190	1	 Subj. + Time + Verb + 了 + Obj. 
+192	1	 Time + Subj. + Verb + 了 + Obj. 
+196	1	 Subj. + Verb + 了 + [Number + Measure Word] + Obj. 
+199	1	 Subj. + 来 / 去 + Place + Verb / [Verb Phrase] + 了 
+200	1	 不 + [Verb Phrase] + 了 
+203	1	 没(有) + [Noun Phrase] + 了 
+206	1	 已经 + 不 + [Verb Phrase] + 了 
+210	1	 [New Situation] + 了 
+215	1	 Noun 1 + 的 + Noun 2 
+224	1	 Topic + 呢 ？ 
+225	1	 [Missing Person / Thing] + 呢 ？ 
+232	1	 Statement + 吧 
+242	1	 Command + 吧 
+252	1	 来 / 去 + Place 
+261	1	 Subj. + 在 + Place 
+271	1	 Place + 有 + Obj. 
+281	1	 Subj. + 有 + Obj. 
+291	1	 请 + Verb 
+296	1	 请 (+ 你) + Verb Phrase 
+303	1	 Subj. + 叫 + [Name] 
+314	1	 Subj. + 去 + [Place] 
+322	1	 Subj. + 去 + Verb 
+325	1	 Subj. + 能 + Verb + Obj. 
+340	1	 Subj. + 会 + Verb + Obj. 
+350	1	 Subj. + 不 + 会 + Verb + Obj. 
+370	1	 Subj. + 想 + Verb (+ Obj.) 
+375	1	 Subj. + 不 + 想 + Verb + Obj. 
+380	1	 Subj. + 怎么 + Verb + Obj. 
+385	1	 Topic + 怎么 + Verb 
+390	1	 Subj. + 在 + Place + Verb + Obj. 
+400	1	 Subj. + 没有 / 没 + Verb 
+411	1	 Noun 1 + 是 + Noun 2 
+426	1	 太 + Adj. + 了 
+436	1	 Noun + 很 + Adj. 
+448	1	 一些 + Noun 
+458	1	 Subj. + 多少钱 ? 
+463	1	 Number + 块 + Number + 毛 
+468	1	 Subj. + Verb + 几 + Measure Word + Noun？ 
+473	1	 Subj. + Verb + 多少 + Measure Word + Noun ？ 
+478	1	 Subj. + 怎么样 ? 
+485	1	 你 觉得 + Topic + 怎么样 ? 
+488	1	 Subj. + Verb + 什么 + (Noun) ? 
+492	1	 Subj. + Verb + 哪里 / 哪儿 ? 
+498	1	 Subj. + Verb + 哪个 (+ Noun) ? 
+507	1	 Subj. + 是 + 谁 ? 
+512	1	 Subj. + 什么时候 + Predicate ? 
+542	1	 Subj. + 为什么 + Predicate ? 
+547	1	 Subj. + 怎么 + Verb (+ Obj.) ? 
+552	1	 Subj. + Verb + Obj. + 了吗? 
+556	1	 Topic (+ Subj.) + Verb + 了吗? 
+561	1	 [Statement] + 吗 ？ 
+577	1	 Subj. + 是 + [Information to be Emphasized] + Verb + 的 
+600	1	 Subj. + 不 + Verb 
+610	1	 不 + Adj. 
+615	1	 Subj. + Verb + 不 + Verb + Obj. 
+621	1	 Subj. + 没(有) + Verb + Obj. 
+622	1	 Subj. + 没有 + Obj. 
+0	2	 Subj. + 还在 + [Verb Phrase] 
+5	2	 ⋯⋯ ，(但是 / 可是 +) Subj. + 还是 + [Verb Phrase] 
+10	2	 Subj. + 还 + 不 / 没 + [Verb Phrase] 
+15	2	 就是 + Noun 
+20	2	 就(是) + (不) + Verb 
+30	2	 Subj. + 都 + Verb + Obj. 
+50	2	 (Subj. +) 就要 + Verb + 了 (，⋯⋯) 
+54	2	 还有 + Time (+ Subj.) + 就 (要) + Verb + 了 
+60	2	 Subj. + 再 + [Verb Phrase] 
+65	2	 Subj. + 再 + Verb + Obj. 
+70	2	 Subj. + 再 + Verb + Verb 
+75	2	 都 + Time + 了 
+80	2	 Subj. + 都 + Predicate + 了 
+85	2	 已经 + [Verb Phrase] + 了 
+90	2	 已经 + (很 +) Adj. + 了 
+95	2	 已经 + Time + 了 
+100	2	 已经 + 不 + Verb + 了 
+105	2	 Subj. + Verb + Obj. 1， 还 + Verb + Obj. 2 
+117	2	 Subj. + Time + 就 + Verb 
+122	2	 Subj. + [Point in Time] + 就 + Verb + 了 
+128	2	 Subj. + Time Period + 就 + Verb + 了 
+133	2	 ..., 就 + Verb Phrase 
+142	2	 别 + Verb (+ Obj.) 
+146	2	 Subj. + 多 + Adj. ? 
+156	2	 Subj. + 有一点(儿) + Adj. 
+160	2	 Subj. + 有点(儿) + Adj. 
+166	2	 Place 1 + 离 + Place 2 + Adv. + 近 / 远 
+171	2	 Place 1 + 离 + Place 2 (+ Adv.) + 近 / 远 + 吗？ 
+174	2	 Place 1 + 离 + Place 2 (+ 有) + 多远？ 
+177	2	 更 + Adj. 
+182	2	 A 比 B + 更 + Adj. 
+187	2	 真 + Adj. / Verb 
+197	2	 Subj. + 还 + 好 / 可以 / 行 / 不错 
+206	2	 Phrase + 的 + （Noun） 
+220	2	 最 + Adj. 
+225	2	 最 + Adj. (+ 了) 
+230	2	 最 + [Psychological Verb] + Obj. (+ 了) 
+237	2	 (那个⋯⋯) (那个⋯⋯) + [anything] + (那个⋯⋯) 
+247	2	 Subj + MW + MW + Predicate 
+257	2	 Time Word + 的 时候, .... ::/:: (Subj.) + Verb / Adj. + 的 时候, .... 
+267	2	 Number + 多 + [Measure word] (+ Noun) 
+276	2	 几 + Measure Word + Noun 
+281	2	 几 + 十 + Measure Word + Noun 
+286	2	 几 + 百 / 千 / 万 + Measure Word + Noun 
+291	2	 好几 + Measure Word + Noun 
+296	2	 Verb + 着 
+300	2	 Verb 1 + 着 + Verb 2 
+308	2	 Subj. + 是 + Verb + 着 + 玩 + 的 
+310	2	 Statement + 吧 
+319	2	 Subj. + [Verb Phrase] + 了 
+328	2	 Subj. +（ 没） + Verb + 过 + Obj. 
+338	2	 Statement + 呢 
+348	2	 Verb + 过 +（ Obj.） + 了 
+367	2	 Noun 1 + 比 + Noun 2 + (更） + Adj. 
+380	2	 Subj. + 给 + Recipient + [Verb Phrase] 
+390	2	 从 + Place  / Time + 到 + Place 2 
+400	2	 往 + Direction / Place + Verb 
+406	2	 Verb + 往 + Direction / Place 
+409	2	" 往 + Direction / Place + Verb :: (往下 as ""Keep Going"")"
+412	2	 Subj. + 对 + Person + Verb 
+417	2	 对 + Person + 来说 ，⋯⋯ 
+422	2	 Subj. + 姓 + [Surname] 
+434	2	 Subj. + 要 + Noun 
+439	2	" Subj. + 要 + Verb ::(要 (yào) as ""Want to"")"
+444	2	" Subj. + 要 + Verb ::(要 (yào) as ""Need to"")"
+449	2	" Subj. + 要 + Verb ::(要 (yào) as ""Going to"")"
+454	2	 (Time) + Subj. + 要 + Verb 
+464	2	 Subj. + (不 )+ 可以 + Verb + Obj. 
+474	2	 Subj. + 要 + Verb + Obj. 
+483	2	 Subj. + [Verb Phrase 1] + [Verb Phrase 2] 
+493	2	 Subj. + 一起 + Verb + Obj. 
+503	2	 Verb + Number + Measure Word 
+513	2	 不要 + Verb 
+523	2	 Subj. + Verb + Verb 
+528	2	 Verb + 一 + Verb 
+533	2	ABAB Reduplication with Two-Syllable Verbs
+537	2	 Subj. + [Special Verb] + 在 + Location 
+549	2	 Subj. + 到 + Place 
+554	2	 到 + Place + 来 / 去 
+556	2	 Subj. + 到 + Place + Verb Phrase 
+561	2	 Subj. + (很) 好 + Verb 
+571	2	 Subj. + Verb + 一下 + Obj. 
+581	2	  Subj. + Verb + 给 + Recipient + Obj. :: or  :: Obj. + Subj. + Verb + 给 + Recipient 
+587	2	 Subj. + 把 + Obj. + Verb + 给 + Recipient 
+593	2	 Subj. + 给 + Target + [Verb Phrase] 
+603	2	 Subj. + Verb + [Indirect Obj.] + [Direct Obj.] 
+613	2	 Verb + 得 + [Degree Complement] 
+637	2	 Subj. + Verb + 不懂 
+647	2	 Subj. + (没) + Verb + Adj. (+ Obj.) 
+657	2	 Subj. + Verb + [One-syllable Verb] +了 (+ Obj.) 
+662	2	 Subj. + (没) + Verb + 到 / 见 + Obj. 
+674	2	 Subj. + Verb + 完 + （Obj.） + （了） 
+688	2	 每 + Measure Word + Noun + 都 
+698	2	 第 + Number +（ Measure Word + Noun） 
+712	2	 Verb + 不 + Verb 
+717	2	 Subj. + Verb + 不 + Verb + Obj. 
+722	2	 Adj. + 不 + Adj. 
+727	2	 [First Character of Adj.] + 不 + Adj. :: / :: [First Character of Verb] + 不 + Verb 
+737	2	 Subj. + 有 没有 + Obj. 
+741	2	 Subj. + 怎么 + Verb + Obj. ? 
+747	2	 Subj. + 怎么 (+ 不) + Adj. 
+752	2	 Subj. + 怎么 + 这么 / 那么 + Adj. 
+757	2	(能……吗？) / (不是……吗？ ) / ( 怎么会……？ ) / ( 谁让你……？)
+787	2	 ⋯⋯， 好 / 对 / 是 / 可以 + 吗？ 
+797	2	 Result, 因为 + Reason 
+802	2	 Reason, 所以 + Result 
+807	2	 因为 + Cause, 所以 + Effect 
+812	2	 快(要)+ Verb + 了 
+817	2	 快要 + Verb + 了 
+822	2	 Subj. + 要 + Verb / Adj. + 了 
+827	2	 Topic (+ Subj.) + 什么 + 都 / 也 + Verb / Adj. 
+832	2	 什么 + Noun + 都 + Verb 
+837	2	 什么 + Noun + 都 / 也 + 不 / 没 (有) + Verb 
+842	2	 别 + Verb / [Verb Phrase] + 了 
+854	2	 Person + 是 + 来 / 去 + Verb+ 的 
+859	2	 Thing + 是 + 用来 + Verb + 的 :: or :: Thing + 是 + 给 + Person + Verb + 的 
+864	2	 Omitting a Noun with 的 
+866	2	 Subj. + 是 + [Distinguishing Words] + 的 
+869	2	 Subj. + 是 + [Information to be Emphasized] + Verb + 的 
+875	2	 Thing + 是 + 用来 + Verb + 的 :: or :: Person + 是 + 来 / 去 + Verb + 的 
+882	2	 每次 + Event 1 + 都 + Event 2 
+892	2	 Noun 1 + 比 + Noun 2 + Adj. + 很多 / 得多 / 多了 
+899	2	 Subj. + Adj. + 多了 
+902	2	 虽然 ⋯⋯ ，但是 / 可是 ⋯⋯ 
+912	2	" Subj. + 要 / 想 / 想要 + Noun :: （Comparing ""要"" and ""想""）"
+942	2	 (很) + 会 / 可以  /  能 + Verb/Adj. 
+0	3	 Subj. + Adj. + 极了 
+10	3	 Adj. + Adj. + 的 (+ Noun) 
+15	3	 A A B B + 的 (+ Noun) 
+22	3	 AABB + 地 + Verb 
+25	3	 Subj. + ABAB 
+28	3	 Subj. + AB + 一下 
+30	3	 Subj. + Adj. + 地 + Verb 
+40	3	 (Subj. +) 又 + Verb + 了 
+44	3	 (Subj. +) 又 + 不 / 没 + Verb 
+51	3	 Subj. + 一直 + Predicate 
+61	3	 Subj. + 总是 + Verb :: / :: 总是 + Adv. + Adj. 
+71	3	 Subj. + (已经 +) Duration + 没 + Verb + 了 
+82	3	 Subj. + 终于 + Predicate + 了 
+92	3	 Subj. + Time + 才 + Verb 
+101	3	 只 + Verb 
+105	3	 只 + 会 / 能 + Verb 
+111	3	 先 ⋯⋯ ，再 ⋯⋯ 
+116	3	 先 + [Verb Phrase] + 再说 
+122	3	 Subj. + 一边 + Verb (，) + 一边 + Verb 
+132	3	 老 (是) + Predicate 
+143	3	 才 + Number + [Measure Word] + Noun 
+148	3	 才 + Verb + Number + Measure Word + Noun 
+153	3	 Subj. + 那么 / 这么 + Adj. 
+163	3	 Noun 1 + 跟 / 和 + Noun 2 + 一样 （+ Adj.） 
+173	3	 Subj. + 又 + Adj. 1 + 又 + Adj. 2 
+183	3	 Subj. + 比较 + Adj. / [Verb Phrase] 
+193	3	 Subj. + 多 + Adj. 
+203	3	 Adj. + 的 + Noun 
+208	3	 Adj. + 的 
+213	3	 Possibility 1 + 或者 + Possibility 2 
+223	3	 Situation ，那么 + Suggestion / Decision 
+233	3	 Subj. + 跟 + Person + 一起 + Verb + Obj. :: / :: Subj. + 跟 + Person + Verb + Obj. 
+251	3	( Subj. + Verb + ) Option A + 还是 + Option B ? 
+261	3	 Time / Verb + 以前 ，⋯⋯ 
+271	3	 以前 + Subj. + Verb + Obj. :: /  :: Subj. + 以前 + Verb + Obj. 
+281	3	 刚才 + Verb 
+291	3	 Time + 时 ，Subj. ⋯⋯ 
+301	3	 Subj. + 以后 + Verb + Obj. :: / :: Subj. + 以后 + Verb + Obj. 
+311	3	 [Past Event 1] ，后来 ，[Past Event 2] 
+321	3	 Number + (Number + 1) 
+331	3	 Verb + 着 
+335	3	 Verb 1 + 着 + Verb 2 
+343	3	 Subj. + 是 + Verb + 着 + 玩 + 的 
+345	3	 Subj. (+ 不) + Verb / Adj. + 了 
+359	3	 Topic / [Missing Person / Thing] + 呢 ？ 
+374	3	 的 + Noun :: / :: Verb + 得 :: / :: Adj. + 地 + Verb 
+392	3	 关于 + Obj. ，⋯⋯ 
+397	3	 关于 ⋯⋯ 的 + Noun 
+404	3	 直到 + Time / Event ，Subj. + 都 ( + 不 / 没 ) ⋯⋯ 
+414	3	 向 + Direction / Person + Verb 
+425	3	 Subj. + 看起来 + Adj. 
+430	3	 Subj. + 看起来 + 像 + Noun Phrase 
+435	3	 Noun 1 + 没有 + Noun 2 + Adj. 
+447	3	 Subj. + [Causative Verb] + Person + Predicate 
+457	3	 经过 + Event / Time ，⋯⋯ 
+465	3	 Subj. (+ 不) + 应该 + Verb + Obj. 
+475	3	 Subj. + (很) 难 + Verb / [Sense Verb] 
+485	3	 Subj. + Verb + 了 + Duration + Obj. 
+488	3	 Subj. + Verb + 了 + Duration + 的 + Obj. 
+491	3	 Subj. + [Time Word] + Verb + 了 + Duration + Obj. 
+496	3	 Subj. + Verb + 了 + Duration + 了 
+501	3	 Subj. + Verb + Obj. + Verb + 了 + Duration + 了 
+506	3	 Subj. + 没办法 + Verb + Obj. 
+516	3	 Subj. + Verb + Verb 
+520	3	 Verb + 一 + Verb 
+526	3	 ABAB Reduplication with Two-Syllable Verbs 
+530	3	 Subj. + 很 + [Certain Verbs] 
+538	3	 Verb + 来 / 去 
+545	3	 Verb + [Compound Direction Complement] 
+549	3	 Verb + Object + Complement 
+556	3	 Subj. + 把 + Obj. + Verb + [Direction Complement] 
+577	3	 Subj. + Verb + 得 / 不 + Complement 
+592	3	 Subj. （+没） Verb + [One-syllable Verb] +了 (+ Obj.) 
+599	3	 Subj. + Verb + [One-syllable Verb] +了 (+ Obj.) 
+602	3	 Subj. + Verb （+ 不） + 下去 (+ 了) 
+614	3	 只要 + Condition ，就 + Result 
+624	3	 ⋯⋯ ，才 ⋯⋯ 
+633	3	 只有 + Essential Condition + 才 + Desired Outcome 
+643	3	 有的 + (Subj.) + Predicate， 有的 + (Subj.) + Predicate 
+653	3	 一 + Measure Word + (Noun) + 也 / 都 + 不 / 没 + Verb 
+660	3	 Topic + Subj. + 一 + Measure Word + (Noun) + 也 / 都 + Verb 
+663	3	 Subj. + 越 ⋯⋯ ，越 ⋯⋯ 
+667	3	 Subj. 1 + 越 ⋯⋯ ，Subj. 2 + 越 ⋯⋯ 
+670	3	 越 ⋯⋯ 越 + 不 ⋯⋯ 
+673	3	 Subj. + 越 + Verb + 越 + 想 + Verb 
+676	3	 Subj. + [Verb Phrase] + Obj. :: / :: Subj. + 把 + Obj. + [Verb Phrase] 
+680	3	 Subj. + 把 + Obj. 1 + Verb + 给 + Obj. 2 
+689	3	 Subj. + 被 (+ Doer) + Verb + 了 
+711	3	 Place + Verb + 着 + [Noun Phrase] 
+716	3	 Place + 是 + [Noun Phrase] 
+721	3	 想 + Verb + 就 + Verb 
+726	3	 想 + Verb + [Question Word] + 就 + Verb + [Question Word] 
+731	3	 谁 + 都 + Predicate 
+734	3	 哪儿 / 哪里 (+ Verb) + 都 + Predicate 
+737	3	 什么时候 (+ Verb) + 都 + Predicate 
+740	3	 Verb + 多少 + 都 + Predicate 
+743	3	 怎么 + Verb + 都 + Predicate 
+746	3	 Subj. + 越来越 + Verb / Adj. + 了 
+756	3	 为了 ⋯⋯ ，Subj. ⋯⋯ 
+762	3	 ⋯⋯ 是 + 为了 / 因为 ⋯⋯ 
+766	3	" ""Somewhere"" with 哪儿 "
+778	3	 A + 有 + B + Adj. + 吗 ？ 
+782	3	 A + 有 + B + Verb + 得 + Adj. + 吗 ？ 
+784	3	 A + 有 (+ B) + 这么 / 那么 + Adj. + 吗 ？ 
+788	3	 跟 + A + 比 (起来) ，B⋯⋯ :: / :: B + 跟 + A + 比 (起来) ，⋯⋯ 
+793	3	 跟 + Time + 比 (起来) ，⋯⋯ 
+798	3	 Noun 1 + 比 + Noun 2 + 更 / 还 + Adj. 
+807	3	 Noun 1 + 比 + Noun 2 + Adj. + 很多 / 得多 / 多了 
+814	3	 Subj. + Adj. + 多了 
+817	3	 除了 ⋯⋯ (+ 以外) ，Subj. + 都 / 也 / 还 ⋯⋯ 
+827	3	 如果 ⋯⋯ ，就 / 那么 / 那 ⋯⋯ 
+836	3	 如果 ⋯⋯ 的话 ，(就) ⋯⋯ 
+841	3	 ⋯⋯ (的话) ，就 ⋯⋯ 
+846	3	 Subj. + 不但 ⋯⋯ ，而且 ⋯⋯ 
+851	3	 不但 + Subj. 1 ⋯⋯ ，而且 + Subj. 2 + 也 ⋯⋯ 
+856	3	 Subj. + Time Word + 才 + Verb 
+859	3	 才 ( + Verb) + Measure Word + Noun 
+861	3	 (现在) + 才 + Time 
+863	3	 Subj. + Time + 就 + Verb + Obj.＋了 
+868	3	 Subj. + 就 + (＋Verb) ＋ Measure Word ＋ Noun 
+872	3	 Subj + 才 + Verb + 就 + Verb Phrase 
+875	3	 刚 (gāng) vs 刚才 (gāngcái) 
+897	3	 一点 (yīdiǎn) vs 有点 (yǒudiǎn) 
+913	3	 Subj. + 再 + Verb 
+916	3	 Subj. + 再 + Verb + Obj. 
+918	3	 Subj. + (先) + Action 1 + 再 + Action 2 
+922	3	 Subj. + 又 + Verb + 了 
+926	3	 Subj. + 又 + 助动词 / 谓语动词 + Obj. 
+0	4	 全 + Noun + 都 + Predicate 
+5	4	 Subj. + 全都 + Predicate 
+10	4	 Subj. + 全都 + 不 / 没 + Predicate 
+15	4	 Subj. + 不 / 没 + 全都 + Predicate 
+20	4	 Adj. + 死了 
+33	4	 Subj. + 差不多 
+38	4	 A + 跟 / 和 + B + 差不多 
+43	4	 差不多 + Adj. / Verb 
+48	4	 差不多 ＋ [Quantity Phrase] / [Time Phrase] 
+53	4	 看来 + Perspective 
+56	4	 在 + Person + 看来 + Perspective 
+58	4	 Subj. + 正好 + [Verb Phrase] 
+68	4	 又 + 不 / 没 + Predicate 
+78	4	 可 + Verb / Adj. 
+84	4	 原来 + 的 + Noun :: / :: Subj. + 原来 + Predicate 
+89	4	 原来 + [New Information] 
+94	4	 Subj. + 差点 + Predicate :: / :: Subj. + 差点 (+就) + Predicate + 了 
+104	4	 Subj. + 从来 + 都 (是) + Predicate 
+112	4	 Reason / Condition ，结果 + Result 
+117	4	 Situation ，结果 + [Unexpected Result] 
+122	4	 (Reason,) 恐怕 ⋯⋯ 
+133	4	 够 + Verb / Adj. + 了 
+138	4	 Subj. + (不 + ) 够 + Adj. / Verb 
+146	4	 A，B，甚至 C + 都 / 也 ⋯⋯ 
+149	4	 ⋯⋯，甚至 ⋯⋯ 
+154	4	 Subj. + 还是 + [Verb Phrase] + 吧 
+164	4	 Subj. + 最好 ( + 别 / 不要 ) + Predicate 
+174	4	 到底 ⋯⋯ ，Reason / Characteristic 
+177	4	 到底 + Question Word :: / :: 到底 + Verb＋不 / 没＋Verb 
+184	4	 到底＋Verb＋了 
+187	4	 究竟 + Question Word 
+192	4	 究竟＋Verb＋没 / 不＋Verb 
+197	4	 A＋究竟 + 是＋ A，…… 
+202	4	 Subj. + 刚 / 刚刚  + Verb (+ Obj.) + Duration 
+212	4	 一 + Measure Word + 一 + Measure Word (+ Noun) 
+216	4	 一 + Time Unit + 一 + Time Unit (+ Noun) 
+218	4	 一 + [Measure Word] (+ 又) + 一 + [Measure Word] 
+222	4	 Subj. + 本来 + 是 +（不）要 / 会 / 应该 + Verb + 的，但是 / 可是 ... 
+227	4	 Subj. + 本来 + 就... 
+232	4	 Subj. + 本来 + 就 + 很 / 不 + Adj. :: / :: Subj. + 本来 + 就 + 会 / 要 / 得 / 应该 + Verb 
+237	4	 就 + Subj. + Predicate 
+242	4	 Subj. + 就 + [Verb Phrase] 
+247	4	 Subj. + 就 + Number + [Measure Word] + Noun 
+252	4	 Subj. + 竟然 ⋯⋯ 
+258	4	 千万 + Verb/Verb Phrase 
+268	4	 难道 + [Rhetorical Question] 
+273	4	 先 ⋯⋯ ，再 ⋯⋯ :: / :: 先 + [Verb Phrase] + 再说 
+284	4	 Subj. + 也都 （ + 不 / 没） + Predicate 
+294	4	 挺 + Adj. / [Verb Phrase] + 的 
+304	4	 Noun 1, Noun 2 (+ Noun 3) + 什么的 
+314	4	 A1，A2 ⋯⋯ 等 / 等等 :: / :: A1，A2 ⋯⋯ 等 + [Category] + Predicate 
+324	4	 ⋯⋯ ，不过 ⋯⋯ 
+334	4	 ⋯⋯ ，于是 (+ Subj.) ⋯⋯ + 了 
+341	4	 ⋯⋯ ，于是 (+ Subj.) ⋯⋯ + 了 :: (因此 vs. 于是)
+342	4	 ⋯⋯ ，还有 ，⋯⋯ 
+352	4	 ⋯⋯ ，另外 ，⋯⋯ :: / :: 另外 + [Verb Phrase] 
+362	4	 ⋯⋯ ，再说 ，⋯⋯ 
+372	4	 Statement， 可是 / 但是 + [Contrary Statement] 
+382	4	 是……，而不是…… :: / :: 不是……，而是…… 
+391	4	 Sentence 1， + 而 + Sentence 2 
+394	4	 通过 / 用 + Method + 来 + [Verb Phrase] 
+404	4	 Category / Group / Context + 其中 
+408	4	 Denominator + 分之 + Numerator 
+413	4	 A + 是 / 占 + B + 的 + Denominator + 分之 + Numerator 
+418	4	 Statement + 吗 ？ :: / :: Confirmation + Question + 吗 ？ 
+438	4	 Option 1 + 吧 ，⋯⋯ ；Option 2 + 吧 ，⋯⋯ 
+448	4	 Statement + 的 
+458	4	 Subj. + 随着 + Noun + Verb Phrase 
+463	4	 随着 + [Noun Phrase] ，Subj. + Predicate 
+468	4	 在 + Topic + 上 ，Subj. ⋯⋯ 
+472	4	 在 ⋯⋯ 下 ，⋯⋯ 
+476	4	 在 + Topic + 方面 ，Subj. ⋯⋯ 
+480	4	 以 + A + 为 + B 
+487	4	 Subj. + 并 + 不 + Verb / Adj. :: / :: Subj. + 并 + 没（有) + Verb 
+492	4	 Subj. + [Causative Verb] + Person + Predicate 
+502	4	 这 / 那 + 要看 / 得看 + [Unclear Situation] 
+507	4	 [Unknown Outcome] + 要看 / 得看 + [Unclear Situation] 
+512	4	 Subj. + 好像 ⋯⋯ 
+522	4	 ⋯⋯ 在于 ⋯⋯ :: / :: ⋯⋯ 在于 + Person / Party 
+530	4	 Subj. + 以为 ⋯⋯ 
+541	4	 通过 + Agent / Method ，Subj. ⋯⋯ 
+551	4	 Subj. + 来自 + Place 
+561	4	 (让 +) Subj. + 来 
+568	4	 Subj. + 不用 + [Verb Phrase] 
+578	4	 Subj. + 得 + [Verb Phrase] 
+588	4	 Verb / [Verb Phrase 1] + 并(且) + Verb / [Verb Phrase 2] 
+598	4	 少 + Verb 
+608	4	 多 + Verb 
+621	4	 Topic + 由 + Person + Verb 
+624	4	 Subj. + 从来 + 不 + [Verb Phrase] 
+629	4	 Subj. + 从来 + 没(有) + Verb + 过 
+634	4	 值得 + Verb / [Verb Phrase] :: / :: ([Verb Phrase]) + 值得 
+640	4	 Verb (+ 一直) + 到 + Time / Event 
+643	4	 [Verb Phrase] (+ 一直) + Verb + 到 + Time / Event 
+650	4	 Reason，害得 / 害 + Undesirable situation 
+661	4	 Verb + Object :: / :: Verb... [Other Stuff]... Object 
+663	4	 跟 + Person + Verb + Object 
+666	4	 Verb + 了 / 过 / 着 + Object 
+674	4	 Verb + [Measure Word Phrase] + Object 
+680	4	 Verb + Verb + Object 
+689	4	 Verb + 着 + Verb + 着 + 就 + Comment + 了 
+692	4	 尽管⋯⋯ ，但是 + Subj. + 还是⋯⋯ 
+699	4	 ⋯⋯ ，Subj. + 倒 + (也 / 又) ⋯⋯ 
+703	4	 Subj. + 倒 ⋯⋯ ，不过 / 但是 / 就是 ⋯⋯ 
+707	4	 Sentence ，(但是 +) Subj. + 却 ⋯⋯ 
+717	4	 由于 + Cause，Effect 
+722	4	 既然＋Fact, 那 / 就 / 那就＋Suggestion / Inference :: / :: 既然 + Fact, （那 +）rhetorical question 
+732	4	 Cause + 因此 + Effect 
+735	4	 Verb + 起来 :: / :: Subj. + 把 + Obj. + Verb + 起来 
+743	4	 Verb + 来 / 去 
+750	4	 Verb + [Compound Direction Complement] 
+754	4	 Verb + Object + Complement 
+761	4	 Subj. + 把 + Obj. + Verb + [Direction Complement] 
+782	4	 Verb + 起来 
+786	4	 Verb / Adj. + 起来 +了 
+794	4	 Subj. + Verb + 起来 + Adv. + Adj. 
+799	4	 Subj. + Verb + 不 / 得 + Complement 
+810	4	 只要 + Condition ，就 + Result 
+820	4	 Result / Fact ，除非 + Condition 
+825	4	 Condition, (要) 不然 + Result 
+828	4	 除非 + Condition ，否则 / 不然 + Result / Fact 
+833	4	 除非 x，才 y 
+836	4	 即使 ⋯⋯ ，也 ⋯⋯ 
+843	4	 要是 + Subj. ⋯⋯ ， 就 ⋯⋯ 
+848	4	 要不是 ⋯⋯ ，⋯⋯ 
+858	4	 不管 + Question Word ，(Subj. +) 都 ⋯⋯ 
+863	4	 不管 + 是 + Option A + 还是 + Option B ，Subj. + 都 ⋯⋯ :: / :: 不管 + Verb / Adj. + 不 + Verb / Adj. ，Subj. + 都 ⋯⋯ 
+868	4	 不管 + 多 + Adj., Subj. + 都 ⋯⋯ 
+873	4	 无论 + Circumstances + 都 / 也 + Inevitable Result 
+877	4	 所有 (+ 的) + Noun 
+881	4	 所有 (+ 的) + Noun + 都 + Predicate 
+885	4	 不是 + 所有 (+ 的) + Noun + 都 + Predicate 
+889	4	 Subj. + 是 + [Noun Phrase] + 之一 :: / :: [Noun Phrase] + 之一 + 是 ⋯⋯ 
+899	4	 另外 + Number + [Measure Word] + Noun 
+909	4	 连 + Verb + 都 + 不 / 没 + Verb (，就 ⋯⋯) 
+913	4	 连 + 一 + Measure Word (+ Noun) + 都 + 不 / 没 + Verb 
+916	4	 Subj. (+ 不) + 为 + Goal + 而 + Efforts Made 
+926	4	 既 + A + 又 + B 
+929	4	 既 + [Verb Phrase] ，也 + [Verb Phrase] 
+932	4	 在 + Place :: / :: 在 + Location+ 上 / 下 / 里 / 旁边 :: / :: 在 + Occasion + 上 
+947	4	 连 + Obj. + 都 (+ 不 / 没) + Verb 
+959	4	 谁 + 都 + Predicate 
+962	4	 哪儿 / 哪里 (+ Verb) + 都 + Predicate 
+965	4	 什么时候 (+ Verb) + 都 + Predicate 
+968	4	 Verb + 多少 + 都 + Predicate 
+971	4	 怎么 + Verb + 都 + Predicate 
+974	4	 A + 是 + B + 的 + Number + 倍 :: / :: A + 比 + B + Adj. + Number + 倍 
+983	4	 Subj. + 一点 + 也 / 都 + 不 + Adj. / [Verb Phrase] 
+995	4	 Subj. + 不知道 + [Verb Phrase] + 好 
+1005	4	 对 + Person + 来说 ，⋯⋯ :: / :: Word + 来说 
+1018	4	 Adj. + 是 + Adj. ， 但是 / 就是 ⋯⋯ 
+1028	4	 一 + Event 1，就 + Event 2 
+1033	4	 一 + Reason，就 + Result 
+1038	4	 一 方面 ⋯⋯ ， (另) 一 方面 ⋯⋯ 
+1048	4	 Subj. + 不仅 / 不但 / 不只 + ⋯⋯，而且 / 还 / 也 + ⋯⋯ 
+1057	4	 Subj. + 本来 + 是 +（不）要 / 会 / 应该 + Verb + 的，但是 / 可是⋯⋯ 
+1062	4	 Subj. + 本来 + 就 ＋ ⋯⋯ 
+1067	4	 原来 + 是 + [Fact / Truth / Reason / Purpose] :: / :: 怪不得 + [Observation / Situation]，原来 + 是（因为 / 为了 / 想⋯⋯） 
+1072	4	 原来的 + Noun 
+1077	4	 刚 (gāng) vs 刚才 (gāngcái) 
+1110	4	 从 + Time / Event + 开始 / 起 
+1114	4	 从 + Place + 上 / 里 
+1117	4	 Place 1 + 离 + Place 2 + 远 / 近 
+1119	4	 Past Event 1 + 离 + Time + Duration :: / :: 离 + Future Event + 还有 + Duration 
+1123	4	 A，相反，B :: / :: A，反而 B 
+1125	4	 Situation，相反，The Opposite of the Situation :: / :: Expectation，反而 + The Opposite of Expectation 
+1128	4	 相反 + 的 + Noun 
+1130	4	 Subj. + 相反 :: / :: A 和 / 跟 B ＋ 是 ＋ 相反的 
+1134	4	 肯定 + Noun / Noun Phrase :: / :: Subj. + (敢)肯定 + Sentences 
+1137	4	 确定 + Phrase / Sentence 
+1141	4	 肯定 + （的 +） Noun 
+1143	4	 一定 + Adj. / Verb 
+1147	4	  肯定  /  确定 / 一定 + （的 +） Noun 
+1151	4	 Subj. + Verb + 以后／的时候，⋯⋯ 
+0	5	 Adj. + 得不得了 
+4	5	 Adj.+ 得很 
+11	5	 Verb + 什么 (+ Verb) ？ :: / :: Adj. + 什么 (+ Adj.) ？ 
+13	5	 Verb + 什么 (+ Verb) ？ 
+16	5	 Adj. + 了（一）点儿 
+26	5	 Subj. + 有的是 + Noun :: / :: Noun + Subj. + 有的是 。 
+35	5	 Subj. ＋Verb + 了 + 又 + Verb，还是 / 就是 …… 
+45	5	 Subj. + 都 + Predicate 
+48	5	 都 + 小句，主句 
+50	5	 都 + 怨 / 是 / 怪 + Somebody 
+53	5	 Subj. + 还 + Predicate / [Verb Phrase] + 吗 ? 
+62	5	 总 + 会 / 得 / 要 / 能 + Verb :: / :: 总 + 不 / 没 + Verb 
+72	5	 Subj. + 进一步 + Verb 
+81	5	 ⋯⋯ ，(Subj. +) 只好 + [Verb Phrase] 
+88	5	 毕竟 ⋯⋯ :: / :: 虽然 ⋯⋯ ，但 + 毕竟 ⋯⋯ ，(as a result) ⋯⋯ 
+98	5	 Subj. + 差点 + 没 + Verb Phrase 
+102	5	 [Disregarded Situation] ， 反正 ⋯⋯ 
+107	5	 反正 + Condition ，Decision / Suggestion 
+112	5	 尽量 + Verb / Adj. 
+117	5	 Subj. + 好容易 / 好不容易 + 才 + Verb，[Result Sentence] 
+122	5	 Verb / [Verb Phrase] + 好容易 / 好不容易 
+125	5	 互相 + Verb 
+136	5	 尽管 + Verb 
+141	5	 Subj. + 不得不 + Verb 
+146	5	 Subj. + 干脆 + Verb 
+150	5	 几乎 + Subj. + 都 + Verb / Adj. 
+155	5	 Subj. + 几乎 ( + 不 / 没 ) + Predicate 
+160	5	 Subj. + 再也 + 不 + Verb-Obj. + 了 
+165	5	 Subj. + 再也 + 没 + Verb + 过 + Obj. 
+170	5	 Subj. + 曾经 + Verb + 过 (+ Obj.) 
+177	5	 曾经 + 是 / 在 / 有 ⋯⋯ 
+182	5	 不曾/ 未曾 + Verb + 过 + Obj. 
+185	5	 再三 + Verb 
+190	5	 Subj. + 简直 + Predicate 
+197	5	 Subj. + 简直 + 是(在) + Predicate 
+199	5	 Subj. + 一向 + Habit / Attitude / etc. 
+203	5	 白 + Verb + 了 
+211	5	 Subj. ＋Verb Phrase 1，顺便 + Verb Phrase 2 
+217	5	 顺便说一下 :: / :: 顺便问一下 :: 
+220	5	 Subj. + 差很多 
+225	5	 A + 跟 / 和 + B + 差很多 
+230	5	 A 啊， B 啊， C 啊⋯⋯ 
+233	5	 Verb 1 + 和 + Verb 2 
+238	5	 Adj. 1 + 和 + Adj. 2 
+243	5	 要不 + Suggestion ，Reason / Situation :: / :: Reason / Situation ，要不 + Suggestion 
+253	5	 彼此 + Verb 
+257	5	 Verb + 彼此 / 对方 
+261	5	 彼此 + 的 + Noun 
+263	5	 对方 + Predicate 
+267	5	 Group + 当中 :: / :: Process + 当中 
+270	5	 Verb + 彼此 :: / :: 彼此 + Verb 
+279	5	 Time / Event + 以来 ，⋯⋯ 
+284	5	 Time Period + 来 ，⋯⋯ 
+290	5	 Subj. + 这个 /  这种 / 这类 + [Category] 
+295	5	 Subj. + Verb + 了 + Obj. :: / :: Subj. + Verb + Obj. + 了 
+322	5	 Subj. + Verb + Complement + 了 :: / :: Subj. + Verb + 了 + Complement 
+342	5	 Topic + 嘛 ，Statement 
+347	5	 Option 1 + 呢 + 还是 + Option 2 + 呢？ 
+349	5	 ⋯⋯Interrogative Pronoun⋯⋯ + 呢？ 
+352	5	 Subj. + Verb 1 + 不 + Verb 1 + (Verb 2) + 呢？ 
+358	5	 Subj. + 有 + [Verb Phrase] 
+363	5	 Subj. + 有 + Adj. + 到 
+366	5	 Subj. + 有 + Adj. 
+369	5	 Subj. + 有 + Verb + 过 + Obj. 
+373	5	 Subj. + 有 + 在 + Verb 
+376	5	 级别 / 次序 / 数目 + 以上 / 以下 
+383	5	 时间 / 处所 / 数量 / 范围 + 以内 / 以外 
+389	5	 自 / 从 / 自从 + Time / Event + 以来 
+393	5	 自从 + [Starting Point] 
+399	5	 对 + Party + 而言 ，⋯⋯ 
+402	5	 为 + Party + Verb / Adj. 
+412	5	 (包括)⋯⋯ 在内 ，⋯⋯ :: / :: ⋯⋯ ，(包括)⋯⋯ 在内 
+416	5	 凭 + Noun / Noun Phrase 
+419	5	 凭 + Verb Phrase / Subj.-Predicate 
+423	5	 Subj. + 凭什么 + Verb Phrase 
+426	5	 凭着 + Noun / Noun Phrase 
+428	5	 Receiver + 给 + The Doer + Verb Phrase 
+433	5	 至于 + Topic， Comment 
+436	5	 Subj. + 就 + 活动的对象或者范围 + Verb + Obj. 
+439	5	 就 + Topic + (来说 / 而言) + Comment 
+442	5	 趁 + [Situation / Opportunity] 
+447	5	 要不是 ⋯⋯（的话），⋯⋯ 
+452	5	 [Good Outcome] ，多亏 (了) + [Lucky Incident] 
+454	5	 多亏 (了) + [Lucky Incident] ，Subj. 才 + [Good Outcome] 
+457	5	 多亏 (了) + [Lucky Incident] ，不然 + Subj. + [Bad Outcome] 
+460	5	 Subj. + Verb + Obj. + 而已 
+464	5	 Verb + 什么 + Obj. 
+469	5	 Noun 1 + 像 + Noun 2 + 一样 + Adj. / Verb 
+473	5	 Noun 1 + 不像 + Noun 2 + (⋯⋯ ) 这么 / 那么 + Adj. / Verb 
+477	5	 比起 + B (+ 来) ，A ~ 
+479	5	 相比 + B ，A + ~ :: / :: 和 / 跟／与 + B + 相比 ，A + ~ 
+483	5	 A + 不如 + B 
+486	5	 A + 不如 + B + Adj. :: / :: A + Verb + 得 + 不如 + B + Adj. :: / :: A + Verb-Obj. + 不如 + B+ (Verb + 得) + Adj. 
+496	5	 Noun / Adj. + 化 
+508	5	 Subj. (+ 不) + 算 + Noun 
+513	5	 Subj. + 算 + Adj. + 的 
+517	5	 Subj. + 不 + 算 + Adj. 
+521	5	 Subj. (+ 不) + 算 + Noun :: / :: Subj. + 算 + Adj. + 的 :: / :: Subj. + 不 + 算 + Adj. :: 
+526	5	 难怪 + [Specific Person / People] 
+529	5	 Subj. + 将 / 将要 / 将会 + [Verb Phrase] 
+536	5	 Subj. + 会 + Predicate + 吗 ？ 
+538	5	 (Subj.) + 难免 + Verb 
+543	5	 [Action] + 以便 + [Outcome] 
+546	5	 受 + (到/过) + ([Something / Someone]) + Noun / Verb 
+558	5	 格外 + verb 
+561	5	 ⋯⋯ ，Subj. + 反而 + [Unexpected Outcome] 
+567	5	 ⋯⋯ ，Subj. 不但 + 不 / 没 ⋯⋯，反而 + [Unexpected Outcome] 
+572	5	 之所以 ⋯⋯ ，是 + 因为 / 为了 / 想 ⋯⋯ 
+577	5	 Subj. + 因(为) + Cause + 而 + Result 
+581	5	 Adj. + 得 + 很 / 不得了 / 要命 / 不行 
+591	5	 Verb + 得 / 不 + 了 :: / :: Verb + 得 / 不 + 下 :: / :: Verb + 得 / 不 + 起 + Obj. :: / :: Verb + 得 / 不 + 动 :: / :: Verb + 得 / 不 + 着 
+614	5	 Verb as Complement 
+637	5	 Adj. + 坏了 
+644	5	 Verb vs. Verb + 到 
+671	5	 Verb + 来 + Verb + 去 
+675	5	 Verb (+ 得 / 不) + 着 
+682	5	 一旦 + Condition，Subj. + 就 + Consequence 
+686	5	 就是 + Hypothetical Statement + 也 + Action 
+690	5	 就算 ⋯⋯ ，也 ⋯⋯ :: / :: 就算 + 再 + Adj. ，也 ⋯⋯ 
+702	5	 哪怕 ⋯⋯ ，也 ⋯⋯ 
+707	5	 哪怕 + Subj. 1 + 再 ⋯⋯ ，Subj. 2 + 也 ⋯⋯ 
+712	5	 假如 + Statement + 就 + Result 
+715	5	 假使 + Statement + 就 + Result 
+718	5	 万一 ⋯⋯怎么办 ？/  呢 ？, ⋯⋯ 
+730	5	 Topic + 的话 ，Comment 
+735	5	 Subj. + 把 + Obj. + 给 + Verb Phrase 
+740	5	 把 + Obj.+ 当成 / 看成 / 当作 / 看作 +⋯⋯ 
+746	5	 (别 / 不）把 + Obj.1 + 当回事 
+750	5	 把 + Obj. 1 + Verb + 成 + Obj. 2 
+758	5	 把 + Obj. 1 + Perception Verbs 
+763	5	 Noun 1 + 不比 + Noun 2 + Adj. 
+767	5	 A + 不比 + B + Verb + 得 + Adj. 
+771	5	 要 + Verb + 就 + Verb 
+776	5	 以 + Subj. + 名义 
+779	5	 Action ，好 + Purpose 
+782	5	 一面 + Verb + 一面 + Verb 
+788	5	 不是 + A，就是 + B 
+792	5	 宁可 ⋯⋯ ，也要 / 也不 ⋯⋯ 
+801	5	 Subj. + 少不了 + 要 + [Verb Phrase] 
+805	5	 Situation / Result ，少不了 + 是 + Reason 
+808	5	 A, 等于 B 
+811	5	 Reason ，怪不得 / 难怪 + [Observation] 
+816	5	 怪不得 / 难怪 + [Observation] ，原来 (+ 是) + Reason 
+823	5	 或者 A ，或者 B 
+826	5	 别说 + A ， 连 / 就是+ B + 也 / 都 + Verb 
+830	5	 连 + A + 都 / 也 + Verb， 更不用说 + B + 了 
+833	5	 Subj. + 连 ⋯⋯ 都 + Verb ，何况 ⋯⋯ 呢 ？ 
+835	5	 Subj. + 连 ⋯⋯ 都 + 不 / 没 + Verb ，何况 ⋯⋯ 呢 ？ 
+838	5	 Subj. (+ 尚且) + 都 / 就 ⋯⋯ ，（更）何况 ⋯⋯ 
+843	5	 Noun + 不仅 + A，而且 + B 
+846	5	 Subj. + 不断 + 地 + Verb 
+849	5	 Subj. + 不停 + 地 + Verb 
+852	5	 Subj. + Verb + 个 + 不停 
+855	5	 常常 / 经常 + Verb 
+864	5	 突然／忽然 + Verb 
+868	5	 突然／忽然 + Adj. 
+872	5	 突然／忽然，⋯⋯ 
+874	5	 突然 + (的) + Noun 
+876	5	 Subj. + Verb + 得 + 突然 
+878	5	 Subj. + Modifier + 突然 
+880	5	 Subj. + 突然 + Modifier 
+893	5	 Subj. + 总算 / 终于 + Verb 
+904	5	 Person A + 跟 / 对 + Person B 说 
+910	5	 Subj. + 跟 / 对 + Obj. 
+916	5	 A + 跟 + B + （不）一样 
+918	5	 A + 跟 + B + （不）一样 + Adj. 
+920	5	 Subj. 1 跟 Subj. 2 + Verb-Obj. 
+922	5	 Subj. 1 对 Subj. 2 + Verb 
+925	5	 向 / 朝 / 往 + 具体方向 + Verb 
+929	5	 Verb + 向 / 往 + 具体方向 
+933	5	 向 / 朝 + 动作的对象 + 具体意义的动词 
+936	5	 向 + Direction + Abstract Verb 
+939	5	 对／对于 + 动作对象 + Verb 
+948	5	 Subj. + 对着／对上／对不上 
+951	5	 A + 对 + B + Adj. 
+956	5	 对于 + Modifier， Subj. + Predicate :: / :: Subj. + 对于 + Modifier + Predicate 
+963	5	 至于 + Topic，Subj. + Verb Phrase 
+965	5	 （不）至于 + Degree 
+973	5	 Subj. + 给 + Recipient + [Verb Phrase] 
+987	5	 Subj. + 适合 + Obj. 
+991	5	 Subj. + Adv. + 合适 
+996	5	 Subj. + 平常 + Verb 
+1000	5	 Subj. + 很 + 平常 :: / :: 平常 + 的 + Noun 
+1006	5	 Subj. + Special Time + 以后／之后 + Verb 
+1010	5	 以后 ，⋯⋯ 
+1013	5	 Event 1 ，之后 + Event 2 
+1018	5	" 然后 as ""and then"" "
+1019	5	 然后 without 先 
+1022	5	" 以后 as ""In the Future"" "
+1024	5	" 以后 as ""After"" "
+1026	5	 [Past Event 1] ，后来 + [Past Event 2] 
+1029	5	 A + 显得 + B + Predicate 
+1034	5	 Subj. + 看起来 + Predicate 
+0	6	 Subj. + Verb + 得 + 倒 + Adj. 
+3	6	 Subj. + 倒 + Adj. 
+8	6	 你 + 倒是 + Verb + 呀 / 啊 
+12	6	 Subj. + 很是 + Adj. 
+19	6	 Subj. + 很是 + 会 / 能 + Verb 
+23	6	 足足 + Verb :: / :: Verb + 足足 
+26	6	 Subj. + 一再 + Verb 
+34	6	 Subject + 向来（都） + Verb/Verb Phrase 
+37	6	 Subj. + 果然 + Predicate 
+41	6	 Clause 1 ，果然 ，Clause 2 
+45	6	 Subj. + 似乎 ⋯⋯ 
+52	6	 凡是 + Noun + 都 / 就 / 一律 + Predicate 
+59	6	 凡(是) + Noun + 无不 / 均 + Predicate 
+63	6	 A, Subject + 偏偏 + B 
+72	6	 一律 (+ 都) + Verb / Adj. 
+80	6	 无非 + 是 + Noun / Verb Phrase 
+92	6	 ……，到时候 + …… 
+98	6	 Subj. + 何必 + Predicate 
+104	6	 何必⋯⋯ 呢 ？⋯⋯ 
+111	6	 Sentence + 来着 
+120	6	 [Noun Phrase 1]，[Noun Phrase 2] + 以及 + [Noun Phrase 3] 
+127	6	 Subject + Predicate, 则 + Subject + Predicate 
+130	6	 Clause 1，+ 而 Subject + 则 + Predicate 
+133	6	 以免 + Verb Phrase 
+138	6	 以免 + Sentence 
+141	6	 本 + Noun 
+145	6	 Word + 性 
+150	6	 是否 + Verb / Adj. 
+153	6	 Noun + 之 + Noun 
+156	6	 Statement + 嘛 
+166	6	 Verb/Adjective + 与否 
+169	6	 Sentence + 呗 
+173	6	 鉴于 + observation, conclusion/suggestion 
+176	6	 Subj. + 非(要) + [Verb Phrase] + 不可 
+183	6	 非 + Subj. + [Verb Phrase] + 不可 
+186	6	 非(要) + Subj. + [Verb Phrase] + 不可 
+190	6	 岂不是 + rhetorical question 
+195	6	 (Subj. + 兼 + Verb + Noun 1 + 和 + Noun 2 ) / ( Subj. + 是 + Noun 1 + 兼 + Noun 2 )
+198	6	 Fact, + 莫非 + conjecture + (不成)? 
+202	6	 莫非 + Subject + rhetorical question 
+205	6	 Reasons, 由此 + results and implications 
+212	6	 Statement, 非 (得) + Action + 不可 / 不行 
+217	6	 Topics or questions + 莫过于 + answer 
+222	6	 与其 ⋯⋯ ，不如 ⋯⋯ 
+227	6	 与其 ⋯⋯ ，Subj. + 宁可 / 宁愿 ⋯⋯ 
+232	6	 与其说 + A，不如说 + B 
+237	6	 跟 + Noun/Pronoun/Adjective + 似的 
+241	6	 Subject + 不愧是（不愧为）+ reputation 
+245	6	 Area of responsibility + 由 + Person(s) + 做主 
+248	6	 一来 + Reason 1 ，二来 + Reason 2 
+251	6	 谅 + Subject + verb phrase 
+255	6	 Subject + 不屑(于) + verb/verb phrase 
+259	6	 不得不 / 只好 + Verb 
+271	6	 (Subj. + 反而 ) / (反而 + Subj. )
+273	6	 Subj. + 却 
+274	6	 反而 + Sentence 
+277	6	 却 + Verb 
+280	6	 反而 and 却 
+282	6	 不但没⋯⋯，反而⋯⋯ 
+283	6	 不但不⋯⋯，反而⋯⋯ 
+284	6	 ⋯⋯，反而却/却反而⋯⋯ 
+286	6	 ⋯⋯， 却偏（偏）⋯⋯ 
+288	6	 虽然⋯⋯却⋯⋯ 
+289	6	 ⋯⋯， 但（是）却⋯⋯ 
+291	6	 Use of 根本
+294	6	 Use of 到底 
+301	6	 Monosyllabic nouns with 据
+303	6	 Pairings with 据 
+305	6	 Referring to people using 据 
+309	6	 还原 + Noun/Nominal Phrase 
+312	6	 Noun/Noun Phrase + 恢复了 
+317	6	 Clause 1, 反而 / 居然 + unexpected opposite outcome 
+319	6	 Clause 1, 不仅没有（不但没有）/ 不仅不 (不但不)......反而...... 

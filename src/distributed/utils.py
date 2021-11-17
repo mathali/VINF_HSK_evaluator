@@ -6,6 +6,7 @@ from pyspark.sql.types import StructType, StructField, StringType, LongType, Arr
 from pyspark.sql import functions as f, SparkSession
 from os import walk
 import os
+import re
 
 
 def get_articles(spark, mode='valid'):
@@ -99,33 +100,76 @@ def setup_spark():
     return spark
 
 
-def get_grammar(g_directory='../data/grammar'):
+def get_grammar(g_directory='../../data/grammar'):
     file_names = next(walk(g_directory), (None, None, []))[2]
 
-    grammar_df = pd.read_csv('../data/grammar/hsk1.csv')
+    grammar_df = pd.read_csv('../../data/grammar/hsk1.csv')
     for file in file_names[1:]:
-        temp_df = pd.read_csv('../data/grammar/'+file)
+        temp_df = pd.read_csv('../../data/grammar/'+file)
         pd.concat([grammar_df, temp_df])
 
     return grammar_df
 
 
-def filter_grammar(g_directory='../data/grammar'):
+def filter_grammar(g_directory='../../data/grammar'):
     file_names = next(walk(g_directory), (None, None, []))[2]
+    file_names.sort()
 
     grammar = []
-    for file in file_names[1:]:
+    for file in file_names:
         grammar.append(pd.read_csv(g_directory+'/'+file, header=None))
 
     structures = pd.DataFrame(columns=['HSK_level', 'structure'])
     for ind, df in enumerate(grammar):
         temp_df = pd.DataFrame({'HSK_level': ind + 1,
-                                'structure': df[5].drop_duplicates().map(lambda x: x.lstrip('::').rstrip('::')).str.split("+")
+                                'structure': df[5].drop_duplicates(keep='first').map(lambda x: x.lstrip('::').rstrip('::'))
                                 })
         structures = pd.concat([structures, temp_df])
 
-    structures.to_csv('../data/grammar/filtered_grammar.csv')
+    structures.to_csv('../../data/filtered_grammar/filtered_grammar.csv', sep='\t')
 
+
+# TODO: Fix splitting issue in certain rules such as 194 and 192
+# TODO: Detect alternatives marked with '/'
+# TODO: Detect optional elements marked with '()'
+def map_to_regex():
+    pos_mapping = pd.read_csv('../../data/filtered_grammar/tmp_pos_mapping', delimiter='\t')
+    filtered_grammar = pd.read_csv('../../data/filtered_grammar/filtered_grammar.csv', delimiter='\t')
+
+    levels = []
+    char_regex = []
+    pos_regex = []
+
+    pattern = re.compile('[\u4e00-\u9fff]+')
+
+    for index, row in filtered_grammar.iterrows():
+        missing_pos_flag = False
+        tmp_c, tmp_p = [], []
+        struct = row['structure'].replace(' ', '').split('+')
+        for part in struct:
+            if part in pos_mapping['POS'].values:
+                tmp_p.extend(pos_mapping[pos_mapping['POS'] == part]['Tag'].values)
+                tmp_c.append('.')
+            elif pattern.match(part):
+                tmp_p.append('.')
+                tmp_c.append(part)
+            else:
+                missing_pos_flag = True
+                break
+
+        # print(tmp_p)
+        # print(tmp_c)
+        # print('========')
+
+        if missing_pos_flag:
+            continue
+
+        levels.append(row['HSK_level'])
+        char_regex.append(tmp_c.copy())
+        pos_regex.append(tmp_p.copy())
+
+    grammar_mapping_df = pd.DataFrame(list(zip(levels, char_regex, pos_regex)), columns=['level', 'char_map', 'pos_map'])
+    grammar_mapping_df.to_csv('../../data/filtered_grammar/grammar_mapping.csv', sep='\t')
 
 def split_file(file='D:/Dokumenty/FIIT/ing/1.semester/VINF/new2016zh/news2016zh_train.json',
                lines=True,
@@ -142,4 +186,4 @@ def split_file(file='D:/Dokumenty/FIIT/ing/1.semester/VINF/new2016zh/news2016zh_
 
 
 if __name__ == '__main__':
-    filter_grammar()
+    map_to_regex()

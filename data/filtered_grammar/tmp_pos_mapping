@@ -1,0 +1,16 @@
+POS	Tag
+Noun	n
+Subj.	n|nr|ns|nz|r|s|d|vn|an
+Adj.	Ag|a|ad|an
+A|B|C	.
+Verb	v
+Time Phrase	t
+Person	r|nr
+Verb Phrase	v|n|nr|r
+Obj.|Object	n|nr|ns|nz|r|s|vn|an
+Duration	t
+Time Unit	t
+Number	m
+Place	s|ns
+Location	s|ns
+The Doer	n|nr|ns|nz|r|s|vn|an
