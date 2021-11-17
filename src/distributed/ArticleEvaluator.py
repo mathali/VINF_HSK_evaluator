@@ -42,12 +42,49 @@ def map_levels(word, hsk_map):
         return -1
 
 
+def evalulation(mode='eval'):
+    spark = utils.setup_spark()
+    articles = utils.get_articles(spark, mode)
+    hsk_map = utils.get_hsk_dict(spark)
+
+    out = articles.rdd.repartition(100) \
+        .map(lambda article: (article['id'],
+                              [x.word for x in pseg.cut(article['content']) if x.flag not in ['x', 'eng', 'm']],
+                              article['HSK_level'],
+                              article['URL'],
+                              article['Title_EN'],
+                              article['Title_ZH'],
+                              article['content'])) \
+        .map(lambda words: (words[0],
+                            [map_levels(word, hsk_map) for word in words[1]],
+                            words[2],
+                            words[3],
+                            words[4],
+                            words[5],
+                            words[6])) \
+        .map(lambda levels: (levels[0],
+                             evaluate(levels[1]),
+                             levels[2],
+                             levels[3],
+                             levels[4],
+                             levels[5],
+                             levels[6]))
+
+    out = out.toDF().select(col('_1').alias('id'), col('_2').alias('Evaluated Level'), col('_3').alias('Labeled Level'),
+                            col('_4').alias('URL'), col('_5').alias('Title_EN'), col('_6').alias('Title_ZH'),
+                            col('_7').alias('content'))
+
+    out.toPandas().to_csv(f'../../output/full_sample/distributed/evaluated_{mode}_partitions.csv', index=False,
+                          sep='\t')
+
+
 def main(mode='valid'):
     spark = utils.setup_spark()
     articles = utils.get_articles(spark, mode)
     hsk_map = utils.get_hsk_dict(spark)
 
-    articles = articles.limit(150000)
+    if mode == 'train':
+        articles = articles.limit(150000)
 
     out = articles.rdd.repartition(100)\
                       .map(lambda article: (article['news_id'],
@@ -77,8 +114,7 @@ def main(mode='valid'):
                             col('_4').alias('source'), col('_5').alias('title'), col('_6').alias('keywords'),
                             col('_7').alias('desc'))
 
-    out.toPandas().to_csv('../../output/full_sample/distributed/evaluated_train_partitions.csv', index=False, sep='\t')
-
+    out.toPandas().to_csv(f'../../output/full_sample/distributed/evaluated_{mode}_partitions.csv', index=False, sep='\t')
 
 if __name__ == '__main__':
     start = time.time()

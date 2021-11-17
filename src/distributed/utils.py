@@ -27,6 +27,20 @@ def get_articles(spark, mode='valid'):
                                  .load('../../data/new2016zh/news2016zh_train.parquet')
         parquet_file.createOrReplaceTempView('articlesParquet')
         return spark.sql('SELECT * FROM articlesParquet LIMIT 150000')
+    elif mode == 'eval':
+        eval_schema = StructType([
+            StructField('id', ShortType(), True),
+            StructField('HSK_level', ShortType(), True),
+            StructField('URL', StringType(), True),
+            StructField('Title_EN', StringType(), True),
+            StructField('Title_ZH', StringType(), True),
+            StructField('Description', StringType(), True),
+            StructField('content', StringType(), True),
+        ])
+        return spark.read.format('csv') \
+                         .option('sep', '\t')\
+                         .schema(eval_schema)\
+                         .load('../../data/hskreading_tab.csv')
 
 
 def create_parquet(spark, original):
