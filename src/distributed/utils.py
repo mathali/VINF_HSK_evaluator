@@ -2,6 +2,8 @@ import json
 import ast
 import sys
 import pandas as pd
+
+from pyspark import SparkConf, SparkContext
 from pyspark.sql.types import StructType, StructField, StringType, LongType, ArrayType, ShortType
 from pyspark.sql import functions as f, SparkSession
 from os import walk
@@ -22,12 +24,15 @@ def get_articles(spark, mode='valid'):
 
     if mode == 'valid':
         return spark.read.json('../../data/new2016zh/news2016zh_train.json', schema=article_schema)
-    elif mode == 'train':
+    elif mode == 'train' or mode == 'full':
         parquet_file = spark.read.format('parquet')\
                                  .schema(article_schema)\
                                  .load('../../data/new2016zh/news2016zh_train.parquet')
         parquet_file.createOrReplaceTempView('articlesParquet')
-        return spark.sql('SELECT * FROM articlesParquet LIMIT 150000')
+        if mode == 'train':
+            return spark.sql('SELECT * FROM articlesParquet LIMIT 150000')
+        else:
+            return spark.sql('SELECT * FROM articlesParquet')
     elif mode == 'eval':
         eval_schema = StructType([
             StructField('id', ShortType(), True),
@@ -93,9 +98,20 @@ def setup_spark():
     os.environ["PYSPARK_PYTHON"] = sys.executable
 
     spark = SparkSession.builder \
-        .master("local[10]") \
         .appName("ArticleEvaluator") \
+        .config("spark.master", "local[10]") \
+        .config("spark.executor.memory", "8g") \
+        .config("spark.driver.memory", "4g") \
         .getOrCreate()
+
+    # conf = SparkConf()
+    # conf.set("spark.master", "local")
+    # conf.set("spark.app.name", "ArticleEvaluator")
+    # conf.set("spark.executor.memory", "8g")
+    # conf.set("spark.driver.memory", "4g")
+    # conf.set("spark.cores.max", "10")
+
+    # spark = SparkContext(conf=conf)
 
     return spark
 
@@ -171,6 +187,8 @@ def map_to_regex():
     grammar_mapping_df = pd.DataFrame(list(zip(levels, char_regex, pos_regex)), columns=['level', 'char_map', 'pos_map'])
     grammar_mapping_df.to_csv('../../data/filtered_grammar/grammar_mapping.csv', sep='\t')
 
+
+@DeprecationWarning
 def split_file(file='D:/Dokumenty/FIIT/ing/1.semester/VINF/new2016zh/news2016zh_train.json',
                lines=True,
                chunk_size=50000):

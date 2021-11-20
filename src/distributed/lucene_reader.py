@@ -28,5 +28,11 @@ def search(query, field):
         doc = searcher.doc(hit.doc)
         print(doc.get(field))
 
-
-search('中国', 'desc')
+if __name__ == '__main__':
+    query = input('Valid Lucene search query: ')
+    field = input('Field (news_id/level/time/source/title/keywords/desc): ')
+    if field not in ['news_id', 'level', 'time', 'source', 'title', 'keywords', 'desc']:
+        print('Invalid field')
+    else:
+        search(query, field)
+    # 中国很大

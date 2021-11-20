@@ -86,7 +86,12 @@ def main(mode='valid'):
     if mode == 'train':
         articles = articles.limit(150000)
 
-    out = articles.rdd.repartition(100)\
+    if mode == 'full':
+        n_partitions = 2000
+    else:
+        n_partitions = 100
+
+    out = articles.rdd.repartition(n_partitions)\
                       .map(lambda article: (article['news_id'],
                                             [x.word for x in pseg.cut(article['content']) if x.flag not in ['x', 'eng', 'm']],
                                             article['time'],
@@ -120,7 +125,7 @@ if __name__ == '__main__':
     start = time.time()
     spark = utils.setup_spark()
     # utils.create_parquet(spark, '../../data/new2016zh/news2016zh_train.json')
-    main('valid')
+    main('full')
     end = time.time()
     print(f'Duration: {(end-start)/60} min')
 
