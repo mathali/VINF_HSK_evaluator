@@ -11,7 +11,6 @@ import lucene_reader as lr
 @click.option('-e', '--evaluate', 'evaluate', is_flag=True, help='Evaluate the HSK level of articles')
 @click.option('-v', '--visualize', 'visualize', is_flag=True, help='Visualize the performance of the evaluator')
 def main(index, reader, evaluate, visualize):
-    print(index, reader, evaluate, visualize)
     if index:
         li.run()
     elif reader:

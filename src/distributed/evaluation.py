@@ -18,7 +18,7 @@ def evaluate(get_levels='False'):
     larger = df['Evaluated Level'] > df['Labeled Level']
     smaller = df['Evaluated Level'] < df['Labeled Level']
     confusion_df = pd.crosstab(df['Labeled Level'], df['Evaluated Level'])
-
+    confusion_df['6'] = 0
     fig = plt.figure(figsize=(8, 6))
 
     ax = fig.add_subplot(2, 2, 1)
@@ -41,22 +41,6 @@ def evaluate(get_levels='False'):
     sn.heatmap(confusion_df, annot=True)
     plt.title('Confusion matrix')
     plt.rcParams.update({'font.size': 22})
-
-    # accuracy = exact.sum() / len(exact)
-    # acc_within_one = within_one.sum() / len(within_one)
-    # higher = larger.sum() / len(larger)
-    # lower = smaller.sum() / len(smaller)
-    #
-    # ax = fig.add_subplot(3, 1, 2)
-    # ax.set_axis_off()
-    # ax.table(cellText=[[f'{accuracy*100:1.1f}%'],
-    #                             [f'{acc_within_one*100:1.1f}%'],
-    #                             [f'{higher*100:1.1f}%'],
-    #                             [f'{lower*100:1.1f}%']],
-    #                   rowLabels=['Accuracy',
-    #                              'Accuracy within one level',
-    #                              'Evaluated as higher level',
-    #                              'Evaluated as lower level']).auto_set_column_width(0)
 
     plt.show()
 

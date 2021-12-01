@@ -26,7 +26,8 @@ def search(mode, query, field):
     for hit in total_hits.scoreDocs:
         print("Hit Score: ", hit.score, "Hit Doc:", hit.doc, "Hit String:", hit.toString())
         doc = searcher.doc(hit.doc)
-        print(doc)  # TODO: Change output formatting
+        print(f'news_id: {doc["news_id"]}, level: {doc["level"]}, time: {doc["time"]}, '
+              f'source: {doc["source"]}, title: {doc["title"]}, keywords: {doc["keywords"]}, desc: {doc["desc"]}')
 
 
 def run():
