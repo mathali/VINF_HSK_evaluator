@@ -9,6 +9,7 @@ from org.apache.lucene.index import (IndexOptions, IndexWriter,
                                      IndexWriterConfig)
 from org.apache.lucene.store import MMapDirectory
 
+
 def main(mode):
     env = lucene.initVM(vmargs=['-Djava.awt.headless=true'])
     fsDir = MMapDirectory(Paths.get(f'{mode}_index'))
@@ -52,8 +53,14 @@ def main(mode):
     writer.commit()
     writer.close()
 
-if __name__ == '__main__':
+
+def run():
+    mode = input('Specify mode (train/valid/full): ')
     start = time.time()
-    main('full')
+    main(mode)
     end = time.time()
     print(f'Duration: {(end-start)/60} min')
+
+
+if __name__ == '__main__':
+    run()

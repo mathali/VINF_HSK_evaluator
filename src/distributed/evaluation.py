@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 import seaborn as sn
 
 
-def evaluate(get_levels=False):
-    if get_levels:
+def evaluate(get_levels='False'):
+    if get_levels == 'True':
         spark = utils.setup_spark()
         ae.evalulation('eval')
 
@@ -61,5 +61,10 @@ def evaluate(get_levels=False):
     plt.show()
 
 
+def run():
+    mode = input('Process articles? (True/False): ')
+    evaluate(mode)
+
+
 if __name__ == '__main__':
-    evaluate(False)
+    run()

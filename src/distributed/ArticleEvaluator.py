@@ -121,11 +121,16 @@ def main(mode='valid'):
 
     out.toPandas().to_csv(f'../../output/full_sample/distributed/evaluated_{mode}_partitions.csv', index=False, sep='\t')
 
-if __name__ == '__main__':
+
+def run():
+    mode = input('Specify mode (train/valid/full): ')
     start = time.time()
     spark = utils.setup_spark()
     # utils.create_parquet(spark, '../../data/new2016zh/news2016zh_train.json')
-    main('full')
+    main(mode)
     end = time.time()
     print(f'Duration: {(end-start)/60} min')
 
+
+if __name__ == '__main__':
+    run()

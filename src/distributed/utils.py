@@ -104,15 +104,6 @@ def setup_spark():
         .config("spark.driver.memory", "4g") \
         .getOrCreate()
 
-    # conf = SparkConf()
-    # conf.set("spark.master", "local")
-    # conf.set("spark.app.name", "ArticleEvaluator")
-    # conf.set("spark.executor.memory", "8g")
-    # conf.set("spark.driver.memory", "4g")
-    # conf.set("spark.cores.max", "10")
-
-    # spark = SparkContext(conf=conf)
-
     return spark
 
 

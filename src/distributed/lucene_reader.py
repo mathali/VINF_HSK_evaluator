@@ -1,3 +1,5 @@
+import time
+
 import lucene
 from java.nio.file import Paths
 from org.apache.lucene.analysis.cn.smart import SmartChineseAnalyzer
@@ -7,12 +9,10 @@ from org.apache.lucene.index import (IndexOptions, IndexWriter, DirectoryReader,
 from org.apache.lucene.store import MMapDirectory
 from org.apache.lucene.queryparser.classic import QueryParser
 
-INDEXDIR = "./valid_index"
 
-
-def search(query, field):
+def search(mode, query, field):
     env = lucene.initVM(vmargs=['-Djava.awt.headless=true'])
-    fsDir = MMapDirectory(Paths.get('train_index'))
+    fsDir = MMapDirectory(Paths.get(f'{mode}_index'))
     lucene_analyzer = SmartChineseAnalyzer()
 
     reader = DirectoryReader.open(fsDir)
@@ -26,13 +26,21 @@ def search(query, field):
     for hit in total_hits.scoreDocs:
         print("Hit Score: ", hit.score, "Hit Doc:", hit.doc, "Hit String:", hit.toString())
         doc = searcher.doc(hit.doc)
-        print(doc.get(field))
+        print(doc)  # TODO: Change output formatting
 
-if __name__ == '__main__':
+
+def run():
+    mode = input('Specify mode (train/valid/full): ')
+    field = input('Default Field (news_id/level/time/source/title/keywords/desc): ')
     query = input('Valid Lucene search query: ')
-    field = input('Field (news_id/level/time/source/title/keywords/desc): ')
     if field not in ['news_id', 'level', 'time', 'source', 'title', 'keywords', 'desc']:
         print('Invalid field')
     else:
-        search(query, field)
-    # 中国很大
+        start = time.time()
+        search(mode, query, field)
+        end = time.time()
+        print(f'Lookup time: {end-start} s ')
+
+
+if __name__ == '__main__':
+    run()
