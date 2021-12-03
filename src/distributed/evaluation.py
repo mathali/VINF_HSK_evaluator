@@ -8,7 +8,7 @@ import seaborn as sn
 def evaluate(get_levels='False'):
     if get_levels == 'True':
         spark = utils.setup_spark()
-        ae.evalulation('eval')
+        ae.evaluation()
 
     df = pd.read_csv('../../output/full_sample/distributed/evaluated_eval_partitions.csv', delimiter='\t')
     df = df[df['Evaluated Level'] != -1]

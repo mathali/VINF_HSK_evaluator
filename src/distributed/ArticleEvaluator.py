@@ -6,6 +6,7 @@ import utils
 
 
 def evaluate(levels):
+    # Keeping track of words per each HSK level
     level_count = {
         1: 0,
         2: 0,
@@ -15,6 +16,7 @@ def evaluate(levels):
         6: 0,
     }
 
+    # Analyze each word segmented by jieb
     for level in levels:
         if not level == -1:
             level_count[level] += 1
@@ -23,9 +25,12 @@ def evaluate(levels):
     current_count = level_count[current_level]
     total_level = sum(level_count.values())
 
+    # Some articles in the dataset are weird and don't actually contain chinese text
     if total_level == 0:
         return -1
 
+    # Calculate HSK difficulty based on the 80:20 rule
+    # E.g. if HSK1 + HSK2 + HSK3 characters represent 80% of the text, the article is graded as HSK3
     ratio = current_count / total_level
     while ratio < 0.8:
         current_level += 1
@@ -36,17 +41,33 @@ def evaluate(levels):
 
 
 def map_levels(word, hsk_map):
+    """
+    Dictionary lookup for each word to retrieve its HSK level
+    :param seg_list: Segmented article
+    :param level_count: Dictionary counting words for each level
+    :param hsk_dict: Reference dictionary for lookups
+    :return:
+    """
     try:
         return hsk_map.value[word]
     except KeyError:
         return -1
 
 
-def evalulation(mode='eval'):
+def evaluation():
+    """
+    Evaluation requires a separate process due to the dataset structure being different
+
+    :return:
+    """
     spark = utils.setup_spark()
-    articles = utils.get_articles(spark, mode)
+    articles = utils.get_articles(spark, 'eval')
     hsk_map = utils.get_hsk_dict(spark)
 
+    # Perform all the steps necessary for article evaluation
+    # 1. Process the text using jieba
+    # 2. Determine the level of each character
+    # 3. Determine the level of the whole article
     out = articles.rdd.repartition(100) \
         .map(lambda article: (article['id'],
                               [x.word for x in pseg.cut(article['content']) if x.flag not in ['x', 'eng', 'm']],
@@ -79,18 +100,33 @@ def evalulation(mode='eval'):
 
 
 def main(mode='valid'):
+    """
+    Core of the functionality for the 'news2016zh' dataset
+
+    :param mode:  determines which part of the dataset is loaded
+    :return:
+    """
     spark = utils.setup_spark()
     articles = utils.get_articles(spark, mode)
     hsk_map = utils.get_hsk_dict(spark)
 
     if mode == 'train':
+        # Normally 2.5 mil, but limited for experimenting how the process works on with a lot of data without
+        # having to wait 6h
         articles = articles.limit(150000)
+    elif mode == 'demo':
+        articles = articles.limit(1000)
 
+    # Drastically increase the number of partitions for the full dataset so it can actually fit into memory
     if mode == 'full':
         n_partitions = 2000
     else:
         n_partitions = 100
 
+    # Perform all the steps necessary for article evaluation
+    # 1. Process the text using jieba
+    # 2. Determine the level of each character
+    # 3. Determine the level of the whole article
     out = articles.rdd.repartition(n_partitions)\
                       .map(lambda article: (article['news_id'],
                                             [x.word for x in pseg.cut(article['content']) if x.flag not in ['x', 'eng', 'm']],
@@ -114,7 +150,6 @@ def main(mode='valid'):
                                            levels[5],
                                            levels[6]))
 
-    # out.toDF().groupBy('_2').count().show()
     out = out.toDF().select(col('_1').alias('news_id'), col('_2').alias('level'), col('_3').alias('time'),
                             col('_4').alias('source'), col('_5').alias('title'), col('_6').alias('keywords'),
                             col('_7').alias('desc'))
@@ -126,7 +161,6 @@ def run():
     mode = input('Specify mode (train/valid/full): ')
     start = time.time()
     spark = utils.setup_spark()
-    # utils.create_parquet(spark, '../../data/new2016zh/news2016zh_train.json')
     main(mode)
     end = time.time()
     print(f'Duration: {(end-start)/60} min')

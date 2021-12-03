@@ -12,6 +12,15 @@ import re
 
 
 def get_articles(spark, mode='valid'):
+    """
+    Load the dataset into spark and return the reference to it
+
+    :param spark: session created in setup_spark
+    :param mode: determines which dataset (file) is loaded
+    :return: Prepared dataset
+    """
+
+    # Predefined schema to speed up loading
     article_schema = StructType([
         StructField('content', StringType(), True),
         StructField('desc', StringType(), True),
@@ -22,9 +31,13 @@ def get_articles(spark, mode='valid'):
         StructField('title', StringType(), True),
     ])
 
-    if mode == 'valid':
+    # Dataset loading
+    if mode == 'valid' or mode == 'demo':
+        # smallest versions, just prepare a basic dataset
         return spark.read.json('../../data/new2016zh/news2016zh_train.json', schema=article_schema)
     elif mode == 'train' or mode == 'full':
+        # version working with the full dataset
+        # convert the dataset into parquet because it might be a bit faster to process (I think)
         parquet_file = spark.read.format('parquet')\
                                  .schema(article_schema)\
                                  .load('../../data/new2016zh/news2016zh_train.parquet')
@@ -34,6 +47,7 @@ def get_articles(spark, mode='valid'):
         else:
             return spark.sql('SELECT * FROM articlesParquet')
     elif mode == 'eval':
+        # Create a completely separate structure for evaluation, due to it being a different dataset
         eval_schema = StructType([
             StructField('id', ShortType(), True),
             StructField('HSK_level', ShortType(), True),
@@ -49,27 +63,15 @@ def get_articles(spark, mode='valid'):
                          .load('../../data/hskreading_tab.csv')
 
 
-def create_parquet(spark, original):
-    dest = original.split('/')
-    name = dest[-1].split('.')[0]
-    format = dest[-1].split('.')[1]
-    path = '/'.join(dest[:-1])
-
-    if format == 'json':
-        article_schema = StructType([
-            StructField('content', StringType(), True),
-            StructField('desc', StringType(), True),
-            StructField('keywords', StringType(), True),
-            StructField('news_id', StringType(), True),
-            StructField('source', StringType(), True),
-            StructField('time', StringType(), True),
-            StructField('title', StringType(), True),
-        ])
-        org_file = spark.read.json(original, schema=article_schema)
-        org_file.write.parquet(path + '/' + name + '.parquet')
-
-
 def get_hsk_dict(spark):
+    """
+    Retrieve HSK graded dictionary in a format usable by spark during the main evaluation.
+
+    :param spark: session created in setup_spark
+    :return:
+    """
+
+    # Bit of a workaround to be able to load list of separate json objects
     hsk_dict = spark.sparkContext.wholeTextFiles('../../data/hsk.json').map(lambda x: ast.literal_eval(x[1])) \
                                                                        .map(lambda x: json.dumps(x))
 
@@ -83,18 +85,29 @@ def get_hsk_dict(spark):
 
     hsk_dict = spark.read.json(hsk_dict, schema=dict_schema)
 
+    # Need to create a mapping in the spark table to replace traditional dictionary functionality
     hsk_dict = hsk_dict.withColumn("json", f.create_map(["hanzi", "level"]))
 
+    # Extract only the relevant mapping to reduce overhead
     extracted_dict = {}
     for x in [zipped for zipped in zip(*hsk_dict.select('json').collect())]:
         for entry in x:
             items = list(entry.items())
             extracted_dict[items[0][0]] = items[0][1]
 
+    # Broadcast the new mapping so it can be used properly by RDD functions
     return spark.sparkContext.broadcast(extracted_dict)
 
 
 def setup_spark():
+    """
+    Create a spark session capable of distributed processing.
+    10 threads (5 cores)
+    12g of total memory
+
+    Capable of processing the full dataset
+    :return:
+    """
     os.environ["PYSPARK_PYTHON"] = sys.executable
 
     spark = SparkSession.builder \
@@ -105,6 +118,11 @@ def setup_spark():
         .getOrCreate()
 
     return spark
+
+
+###############################################################
+# The following section is bonus WIP
+###############################################################
 
 
 def get_grammar(g_directory='../../data/grammar'):
@@ -177,21 +195,6 @@ def map_to_regex():
 
     grammar_mapping_df = pd.DataFrame(list(zip(levels, char_regex, pos_regex)), columns=['level', 'char_map', 'pos_map'])
     grammar_mapping_df.to_csv('../../data/filtered_grammar/grammar_mapping.csv', sep='\t')
-
-
-@DeprecationWarning
-def split_file(file='D:/Dokumenty/FIIT/ing/1.semester/VINF/new2016zh/news2016zh_train.json',
-               lines=True,
-               chunk_size=50000):
-
-    chunks = pd.read_json(file, lines=lines, chunksize=chunk_size)
-    out_dir = '../data/split/'+file.split('/')[-1].split('.')[0]
-
-    if not os.path.isdir(out_dir):
-        os.mkdir(out_dir)
-
-    for ind, chunk in enumerate(chunks):
-        chunk.to_csv(out_dir+f'/chunk_{str(ind).zfill(3)}.csv')
 
 
 if __name__ == '__main__':
