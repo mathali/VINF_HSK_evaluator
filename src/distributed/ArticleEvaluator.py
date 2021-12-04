@@ -1,6 +1,7 @@
 import time
 import jieba.posseg as pseg
 from pyspark.sql.functions import col
+import os
 
 import utils
 
@@ -16,7 +17,7 @@ def evaluate(levels):
         6: 0,
     }
 
-    # Analyze each word segmented by jieb
+    # Analyze each word segmented by jieba
     for level in levels:
         if not level == -1:
             level_count[level] += 1
@@ -95,7 +96,8 @@ def evaluation():
                             col('_4').alias('URL'), col('_5').alias('Title_EN'), col('_6').alias('Title_ZH'),
                             col('_7').alias('content'))
 
-    out.toPandas().to_csv(f'../../output/full_sample/distributed/evaluated_{mode}_partitions.csv', index=False,
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
+    out.toPandas().to_csv(f'../../output/full_sample/distributed/evaluated_eval_partitions.csv', index=False,
                           sep='\t')
 
 
@@ -154,6 +156,7 @@ def main(mode='valid'):
                             col('_4').alias('source'), col('_5').alias('title'), col('_6').alias('keywords'),
                             col('_7').alias('desc'))
 
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
     out.toPandas().to_csv(f'../../output/full_sample/distributed/evaluated_{mode}_partitions.csv', index=False, sep='\t')
 
 

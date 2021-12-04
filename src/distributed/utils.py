@@ -31,16 +31,24 @@ def get_articles(spark, mode='valid'):
         StructField('title', StringType(), True),
     ])
 
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
     # Dataset loading
     if mode == 'valid' or mode == 'demo':
         # smallest versions, just prepare a basic dataset
-        return spark.read.json('../../data/new2016zh/news2016zh_train.json', schema=article_schema)
+        path = os.path.join(os.getcwd(), '..', '..', 'data', 'new2016zh', 'news2016zh_valid.json')
+        return spark.read.json(path, schema=article_schema)
     elif mode == 'train' or mode == 'full':
         # version working with the full dataset
         # convert the dataset into parquet because it might be a bit faster to process (I think)
+        path = os.path.join(os.getcwd(), '..', '..', 'data', 'new2016zh', 'news2016zh_train.parquet')
+        if not os.path.isdir(path):
+            json_path = os.path.join(os.getcwd(), '..', '..', 'data', 'new2016zh', 'news2016zh_train.json')
+            create_parquet(spark, json_path)
+
         parquet_file = spark.read.format('parquet')\
                                  .schema(article_schema)\
-                                 .load('../../data/new2016zh/news2016zh_train.parquet')
+                                 .load(path)
         parquet_file.createOrReplaceTempView('articlesParquet')
         if mode == 'train':
             return spark.sql('SELECT * FROM articlesParquet LIMIT 150000')
@@ -57,10 +65,11 @@ def get_articles(spark, mode='valid'):
             StructField('Description', StringType(), True),
             StructField('content', StringType(), True),
         ])
+        path = os.path.join(os.getcwd(), '..', '..', 'data', 'hskreading_tab.csv')
         return spark.read.format('csv') \
                          .option('sep', '\t')\
                          .schema(eval_schema)\
-                         .load('../../data/hskreading_tab.csv')
+                         .load(path)
 
 
 def get_hsk_dict(spark):
@@ -70,10 +79,12 @@ def get_hsk_dict(spark):
     :param spark: session created in setup_spark
     :return:
     """
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
+    path = os.path.join(os.getcwd(), '..', '..', 'data', 'hsk.json')
 
     # Bit of a workaround to be able to load list of separate json objects
-    hsk_dict = spark.sparkContext.wholeTextFiles('../../data/hsk.json').map(lambda x: ast.literal_eval(x[1])) \
-                                                                       .map(lambda x: json.dumps(x))
+    hsk_dict = spark.sparkContext.wholeTextFiles(path).map(lambda x: ast.literal_eval(x[1])) \
+                                                      .map(lambda x: json.dumps(x))
 
     dict_schema = StructType([
         StructField('hanzi', StringType(), True),
@@ -118,6 +129,26 @@ def setup_spark():
         .getOrCreate()
 
     return spark
+
+
+def create_parquet(spark, original):
+    dest = original.split('/')
+    name = dest[-1].split('.')[0]
+    format = dest[-1].split('.')[1]
+    path = '/'.join(dest[:-1])
+
+    if format == 'json':
+        article_schema = StructType([
+            StructField('content', StringType(), True),
+            StructField('desc', StringType(), True),
+            StructField('keywords', StringType(), True),
+            StructField('news_id', StringType(), True),
+            StructField('source', StringType(), True),
+            StructField('time', StringType(), True),
+            StructField('title', StringType(), True),
+        ])
+        org_file = spark.read.json(original, schema=article_schema)
+        org_file.write.parquet(path + '/' + name + '.parquet')
 
 
 ###############################################################
