@@ -9,9 +9,11 @@ from selenium.common.exceptions import TimeoutException, NoSuchElementException
 def crawl():
     options = webdriver.ChromeOptions()
     options.add_argument("headless")
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
+    # Provided chromedriver is compatible with Chrome 96.0.4664.45 for deb64 based systems
+    # Please provide a version compatible with your system if you're running something else
     driver = webdriver.Chrome("../chromedriver")#, options=options)
 
-    os.chdir(os.path.dirname(os.path.abspath(__file__)))
     output_file = '../output/crawler/hskreading_new.csv'
 
     with open(output_file, 'w', newline='\n', encoding='utf-8') as f:

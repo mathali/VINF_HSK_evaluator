@@ -1,5 +1,5 @@
+import os
 import time
-
 import lucene
 
 from java.nio.file import Paths
@@ -8,29 +8,35 @@ from org.apache.lucene.document import Document, Field, FieldType
 from org.apache.lucene.index import (IndexOptions, IndexWriter,
                                      IndexWriterConfig)
 from org.apache.lucene.store import MMapDirectory
+from tqdm import tqdm
 
 
 def main(mode):
+    # Basic Lucene setup
     env = lucene.initVM(vmargs=['-Djava.awt.headless=true'])
     fsDir = MMapDirectory(Paths.get(f'{mode}_index'))
-    writerConfig = IndexWriterConfig(SmartChineseAnalyzer())
+    writerConfig = IndexWriterConfig(SmartChineseAnalyzer())    # Analyzer that works with chinese text
+
+    # Delete any existing index with the same name
     writer = IndexWriter(fsDir, writerConfig)
     writer.deleteAll()
+    # Make sure everything got deleted
     print(f"{writer.getPendingNumDocs()} docs found in index")
 
-
-    # Define field type
+    # Basic index for short simple fields that shouldn't vary a lot
     t1 = FieldType()
     t1.setStored(True)
     t1.setIndexOptions(IndexOptions.DOCS)
 
+    # More complex index for 'text-based' fields to accommodate more robust queries
     t2 = FieldType()
     t2.setStored(True)
-    t2.setIndexOptions(IndexOptions.DOCS_AND_FREQS)
+    t2.setIndexOptions(IndexOptions.DOCS_AND_FREQS_AND_POSITIONS)
 
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
     with open(f'../../output/full_sample/distributed/evaluated_{mode}_partitions.csv') as articles:
         head = False
-        for ind, row in enumerate(articles):
+        for ind, row in enumerate(tqdm(articles)):
             if not head:
                 fields = row.replace('\n', '').split('\t')
                 head = True
@@ -45,8 +51,8 @@ def main(mode):
                     doc.add(Field(fields[field], row[field], t))
                 writer.addDocument(doc)
 
+            # Partial index commits for modes working with a large amount of data
             if ind % 50000 == 0:
-                print(f'Indexed {ind} articles')
                 writer.commit()
 
     print(f"{writer.getPendingNumDocs()} docs found in index")
@@ -55,7 +61,7 @@ def main(mode):
 
 
 def run():
-    mode = input('Specify mode (train/valid/full): ')
+    mode = input('Specify mode (demo/train/valid/full): ')
     start = time.time()
     main(mode)
     end = time.time()

@@ -3,13 +3,16 @@ import utils
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sn
+import os
 
 
 def evaluate(get_levels='False'):
+    # If we need to process the evaluation dataset again
     if get_levels == 'True':
         spark = utils.setup_spark()
         ae.evaluation()
 
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
     df = pd.read_csv('../../output/full_sample/distributed/evaluated_eval_partitions.csv', delimiter='\t')
     df = df[df['Evaluated Level'] != -1]
 

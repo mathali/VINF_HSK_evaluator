@@ -31,7 +31,7 @@ def search(mode, query, field):
 
 
 def run():
-    mode = input('Specify mode (train/valid/full): ')
+    mode = input('Specify mode (demo/train/valid/full): ')
     field = input('Default Field (news_id/level/time/source/title/keywords/desc): ')
     query = input('Valid Lucene search query: ')
     if field not in ['news_id', 'level', 'time', 'source', 'title', 'keywords', 'desc']:

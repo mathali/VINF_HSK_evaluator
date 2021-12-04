@@ -108,13 +108,13 @@ def setup_spark():
     Capable of processing the full dataset
     :return:
     """
-    os.environ["PYSPARK_PYTHON"] = sys.executable
 
     spark = SparkSession.builder \
         .appName("ArticleEvaluator") \
         .config("spark.master", "local[10]") \
         .config("spark.executor.memory", "8g") \
         .config("spark.driver.memory", "4g") \
+        .config("spark.ui.showConsoleProgress", "true") \
         .getOrCreate()
 
     return spark

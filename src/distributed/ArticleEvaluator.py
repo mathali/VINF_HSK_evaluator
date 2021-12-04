@@ -158,7 +158,7 @@ def main(mode='valid'):
 
 
 def run():
-    mode = input('Specify mode (train/valid/full): ')
+    mode = input('Specify mode (demo/train/valid/full): ')
     start = time.time()
     spark = utils.setup_spark()
     main(mode)
