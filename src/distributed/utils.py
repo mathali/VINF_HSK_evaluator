@@ -185,9 +185,18 @@ def filter_grammar(g_directory='../../data/grammar'):
     structures.to_csv('../../data/filtered_grammar/filtered_grammar.csv', sep='\t')
 
 
-# TODO: Fix splitting issue in certain rules such as 194 and 192
-# TODO: Detect alternatives marked with '/'
-# TODO: Detect optional elements marked with '()'
+def get_grammar_mapping(spark, mode):
+    grammar_schema = StructType([
+        StructField('level', ShortType(), True),
+        StructField('char_map', ArrayType(elementType=StringType()), True),
+        StructField('pos_map', ArrayType(elementType=StringType()), True),
+    ])
+
+    return spark.read.json('../../data/filtered_grammar/grammar_mapping.csv', schema=grammar_schema)
+
+# TODO: Fix splitting issue with []
+# TODO: Try to process a sample of data with this prototype
+# TODO: Match number of '.' to number of characters
 def map_to_regex():
     pos_mapping = pd.read_csv('../../data/filtered_grammar/tmp_pos_mapping', delimiter='\t')
     filtered_grammar = pd.read_csv('../../data/filtered_grammar/filtered_grammar.csv', delimiter='\t')
@@ -201,14 +210,29 @@ def map_to_regex():
     for index, row in filtered_grammar.iterrows():
         missing_pos_flag = False
         tmp_c, tmp_p = [], []
-        struct = row['structure'].replace(' ', '').split('+')
+        struct = row['structure'].replace(' ', '').replace('?', '').replace('？', '').replace('::', '')
+        struct = re.split('[+，＋]|⋯⋯|……', struct)
         for part in struct:
             if part in pos_mapping['POS'].values:
                 tmp_p.extend(pos_mapping[pos_mapping['POS'] == part]['Tag'].values)
-                tmp_c.append('.')
+                if '|' in tmp_p[-1]:
+                    tmp_p[-1] = '('+tmp_p[-1]+')'
+                tmp_c.append('.{1,7}')
             elif pattern.match(part):
-                tmp_p.append('.')
-                tmp_c.append(part)
+                tmp_p.append('.{1,3}')
+
+                part = part.replace('/', '|').replace('／', '|')
+                part = re.sub('[（(]', '[', part)
+                part = re.sub('[)）]', ']？', part)
+                part = re.sub('[a-zA-Z"]', '', part)
+
+                if '|' in part:
+                    tmp_c.append('('+part+')')
+                else:
+                    tmp_c.append(part)
+            elif part == '':
+                tmp_p.append('.{1,7}')
+                tmp_c.append('.{1,7}')
             else:
                 missing_pos_flag = True
                 break
@@ -225,7 +249,7 @@ def map_to_regex():
         pos_regex.append(tmp_p.copy())
 
     grammar_mapping_df = pd.DataFrame(list(zip(levels, char_regex, pos_regex)), columns=['level', 'char_map', 'pos_map'])
-    grammar_mapping_df.to_csv('../../data/filtered_grammar/grammar_mapping.csv', sep='\t')
+    grammar_mapping_df.to_csv('../../data/filtered_grammar/grammar_mapping.csv', sep='\t', index=False)
 
 
 if __name__ == '__main__':
