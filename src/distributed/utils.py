@@ -152,11 +152,16 @@ def create_parquet(spark, original):
 
 
 ###############################################################
-# The following section is bonus WIP
+# Bonus grammar processing
 ###############################################################
 
 
 def get_grammar(g_directory='../../data/grammar'):
+    """
+    Just a support function for loading all csv grammar files from https://github.com/infinyte7/Chinese-Grammar
+    :param g_directory:
+    :return:
+    """
     file_names = next(walk(g_directory), (None, None, []))[2]
 
     grammar_df = pd.read_csv('../../data/grammar/hsk1.csv')
@@ -168,6 +173,11 @@ def get_grammar(g_directory='../../data/grammar'):
 
 
 def filter_grammar(g_directory='../../data/grammar'):
+    """
+    Pre filter grammar DF so it's easier to write rules for RegEx conversion
+    :param g_directory:
+    :return:
+    """
     file_names = next(walk(g_directory), (None, None, []))[2]
     file_names.sort()
 
@@ -177,6 +187,7 @@ def filter_grammar(g_directory='../../data/grammar'):
 
     structures = pd.DataFrame(columns=['HSK_level', 'structure'])
     for ind, df in enumerate(grammar):
+        # CSV files contain a bunch of duplicates, because they provide multiple examples for each rule
         temp_df = pd.DataFrame({'HSK_level': ind + 1,
                                 'structure': df[5].drop_duplicates(keep='first').map(lambda x: x.lstrip('::').rstrip('::'))
                                 })
@@ -185,18 +196,26 @@ def filter_grammar(g_directory='../../data/grammar'):
     structures.to_csv('../../data/filtered_grammar/filtered_grammar.csv', sep='\t')
 
 
-def get_grammar_mapping(spark, mode):
+def get_grammar_mapping(spark):
+    """
+    Load and broadcast character and PoS RegEx rules so they are usable by RDD functions
+    :param spark:
+    :return:
+    """
     grammar_schema = StructType([
         StructField('level', ShortType(), True),
-        StructField('char_map', ArrayType(elementType=StringType()), True),
-        StructField('pos_map', ArrayType(elementType=StringType()), True),
+        StructField('char_map',  StringType(), True),
+        StructField('pos_map',  StringType(), True),
     ])
+    g_df = spark.read.option("delimiter", "\t").csv('../../data/filtered_grammar/grammar_mapping.csv', schema=grammar_schema)
 
-    return spark.read.json('../../data/filtered_grammar/grammar_mapping.csv', schema=grammar_schema)
+    grammar_out = []
+    for x in g_df.collect():
+        grammar_out.append((x[0], x[1], x[2]))
 
-# TODO: Fix splitting issue with []
-# TODO: Try to process a sample of data with this prototype
-# TODO: Match number of '.' to number of characters
+    return spark.sparkContext.broadcast(grammar_out[1:])
+
+
 def map_to_regex():
     pos_mapping = pd.read_csv('../../data/filtered_grammar/tmp_pos_mapping', delimiter='\t')
     filtered_grammar = pd.read_csv('../../data/filtered_grammar/filtered_grammar.csv', delimiter='\t')
@@ -205,14 +224,20 @@ def map_to_regex():
     char_regex = []
     pos_regex = []
 
+    # Chinese character filter
     pattern = re.compile('[\u4e00-\u9fff]+')
 
     for index, row in filtered_grammar.iterrows():
         missing_pos_flag = False
         tmp_c, tmp_p = [], []
+        # Remove redundant characters
         struct = row['structure'].replace(' ', '').replace('?', '').replace('？', '').replace('::', '')
+        # Splitting based on these characters lets us create separate character and PoS rules
         struct = re.split('[+，＋]|⋯⋯|……', struct)
+
+        # When adding rules to Characters, add wildcard to PoS and vice-versa
         for part in struct:
+            # Replace grammar rule terms like 'Noun' or 'Duration' with appropriate Jieba PoS tags
             if part in pos_mapping['POS'].values:
                 tmp_p.extend(pos_mapping[pos_mapping['POS'] == part]['Tag'].values)
                 if '|' in tmp_p[-1]:
@@ -221,6 +246,7 @@ def map_to_regex():
             elif pattern.match(part):
                 tmp_p.append('.{1,3}')
 
+                # Process more complex parts of the grammar rules, like alternatives and optional parts
                 part = part.replace('/', '|').replace('／', '|')
                 part = re.sub('[（(]', '[', part)
                 part = re.sub('[)）]', ']？', part)
@@ -236,10 +262,6 @@ def map_to_regex():
             else:
                 missing_pos_flag = True
                 break
-
-        # print(tmp_p)
-        # print(tmp_c)
-        # print('========')
 
         if missing_pos_flag:
             continue

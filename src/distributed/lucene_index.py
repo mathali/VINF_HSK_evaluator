@@ -11,10 +11,18 @@ from org.apache.lucene.store import MMapDirectory
 from tqdm import tqdm
 
 
-def main(mode):
+def main(mode, gflag):
     # Basic Lucene setup
     env = lucene.initVM(vmargs=['-Djava.awt.headless=true'])
-    fsDir = MMapDirectory(Paths.get(f'{mode}_index'))
+
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
+    if gflag:
+        file = f'../../output/full_sample/distributed/evaluated_{mode}_grammar_partitions.csv'
+        fsDir = MMapDirectory(Paths.get(f'{mode}_grammar_index'))
+    else:
+        file = f'../../output/full_sample/distributed/evaluated_{mode}_partitions.csv'
+        fsDir = MMapDirectory(Paths.get(f'{mode}_index'))
+
     writerConfig = IndexWriterConfig(SmartChineseAnalyzer())    # Analyzer that works with chinese text
 
     # Delete any existing index with the same name
@@ -33,8 +41,7 @@ def main(mode):
     t2.setStored(True)
     t2.setIndexOptions(IndexOptions.DOCS_AND_FREQS_AND_POSITIONS)
 
-    os.chdir(os.path.dirname(os.path.abspath(__file__)))
-    with open(f'../../output/full_sample/distributed/evaluated_{mode}_partitions.csv') as articles:
+    with open(file) as articles:
         head = False
         for ind, row in enumerate(tqdm(articles)):
             if not head:
@@ -60,10 +67,10 @@ def main(mode):
     writer.close()
 
 
-def run():
+def run(gflag):
     mode = input('Specify mode (demo/train/valid/full): ')
     start = time.time()
-    main(mode)
+    main(mode, gflag)
     end = time.time()
     print(f'Duration: {(end-start)/60} min')
 

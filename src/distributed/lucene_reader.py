@@ -10,9 +10,14 @@ from org.apache.lucene.store import MMapDirectory
 from org.apache.lucene.queryparser.classic import QueryParser
 
 
-def search(mode, query, field):
+def search(mode, query, field, gflag):
     env = lucene.initVM(vmargs=['-Djava.awt.headless=true'])
-    fsDir = MMapDirectory(Paths.get(f'{mode}_index'))
+
+    if gflag:
+        fsDir = MMapDirectory(Paths.get(f'{mode}_grammar_index'))
+    else:
+        fsDir = MMapDirectory(Paths.get(f'{mode}_index'))
+
     lucene_analyzer = SmartChineseAnalyzer()
 
     reader = DirectoryReader.open(fsDir)
@@ -26,11 +31,16 @@ def search(mode, query, field):
     for hit in total_hits.scoreDocs:
         print("Hit Score: ", hit.score, "Hit Doc:", hit.doc, "Hit String:", hit.toString())
         doc = searcher.doc(hit.doc)
-        print(f'news_id: {doc["news_id"]}, level: {doc["level"]}, time: {doc["time"]}, '
-              f'source: {doc["source"]}, title: {doc["title"]}, keywords: {doc["keywords"]}, desc: {doc["desc"]}')
+        if gflag:
+            print(f'news_id: {doc["news_id"]}, vocab level: {doc["level"]}, grammar level: {doc["grammar_level"]}, '
+                  f'time: {doc["time"]}, source: {doc["source"]}, title: {doc["title"]}, keywords: {doc["keywords"]}, '
+                  f'desc: {doc["desc"]}')
+        else:
+            print(f'news_id: {doc["news_id"]}, level: {doc["level"]}, time: {doc["time"]}, '
+                  f'source: {doc["source"]}, title: {doc["title"]}, keywords: {doc["keywords"]}, desc: {doc["desc"]}')
 
 
-def run():
+def run(gflag):
     mode = input('Specify mode (demo/train/valid/full): ')
     field = input('Default Field (news_id/level/time/source/title/keywords/desc): ')
     query = input('Valid Lucene search query: ')
@@ -38,7 +48,7 @@ def run():
         print('Invalid field')
     else:
         start = time.time()
-        search(mode, query, field)
+        search(mode, query, field, gflag)
         end = time.time()
         print(f'Lookup time: {end-start} s ')
 

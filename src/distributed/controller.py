@@ -1,5 +1,7 @@
 import click
 import ArticleEvaluator as ae
+import ArticleEvaluatorGrammar as aeg
+import grammar_evaluation as ge
 import evaluation as e
 import lucene_index as li
 import lucene_reader as lr
@@ -14,13 +16,29 @@ import hskreading as c
 @click.option('-c', '--crawl', 'crawl', is_flag=True, help='Extract evaluation dataset from hskreading.com')
 def main(index, reader, evaluate, visualize, crawl):
     if index:
-        li.run()
+        grammar = input('Include grammar?(y/n): ')
+        if grammar == 'n':
+            li.run(False)
+        else:
+            li.run(True)
     elif reader:
-        lr.run()
+        grammar = input('Include grammar?(y/n): ')
+        if grammar == 'n':
+            lr.run(False)
+        else:
+            lr.run(True)
     elif evaluate:
-        ae.run()
+        grammar = input('Include grammar?(y/n): ')
+        if grammar == 'n':
+            ae.run()
+        else:
+            aeg.run()
     elif visualize:
-        e.run()
+        grammar = input('Include grammar?(y/n): ')
+        if grammar == 'n':
+            e.run()
+        else:
+            ge.run()
     elif crawl:
         c.crawl()
 

@@ -70,26 +70,31 @@ def map_grammar(content, grammar_map):
         6: 0,
     }
     text = ''.join([x.word for x in content])
-    # tags = ''.join([x.flag for x in content])
 
-    grammar_map['char_map'] = grammar_map['char_map'].apply(ast.literal_eval)
-    grammar_map['pos_map'] = grammar_map['pos_map'].apply(ast.literal_eval)
-    for ind, row in grammar_map.iterrows():
-        char_pattern = ''.join(row['char_map'])
-        pos_pattern = ''.join(row['pos_map'])
+    for row in grammar_map.value:
+        row = pd.DataFrame(row)
+        row.iloc[1] = row.iloc[1].apply(ast.literal_eval)
+        row.iloc[2] = row.iloc[2].apply(ast.literal_eval)
+        row = row.values
+        char_pattern = ''.join(row[1][0])
+        pos_pattern = ''.join(row[2][0])
+
         c_p = re.compile(char_pattern)
         p_p = re.compile(pos_pattern)
 
+        # Find a position with characters that correspond to the current grammar rule
         for match in re.finditer(c_p,text):
             tags = ''.join([x.flag for x in content[match.start():match.end()]])
+            # Determine if the PoS tags at the match location fulfill the second part of the rule
             pos_match = re.search(p_p, tags)
             if pos_match:
-                level_count[row['level']] = level_count[row['level']] + 1
+                level_count[row[0][0]] = level_count[row[0][0]] + 1
 
     return evaluate(None, level_count)
 
 
-def evaluation():
+
+def evaluation_grammar():
     """
     Evaluation requires a separate process due to the dataset structure being different
 
@@ -97,6 +102,7 @@ def evaluation():
     """
     spark = utils.setup_spark()
     articles = utils.get_articles(spark, 'eval')
+    grammar_map = utils.get_grammar_mapping(spark)
     hsk_map = utils.get_hsk_dict(spark)
 
     # Perform all the steps necessary for article evaluation
@@ -106,6 +112,7 @@ def evaluation():
     out = articles.rdd.repartition(100) \
         .map(lambda article: (article['id'],
                               [x.word for x in pseg.cut(article['content']) if x.flag not in ['x', 'eng', 'm']],
+                              map_grammar([x for x in pseg.cut(article['content'])], grammar_map),
                               article['HSK_level'],
                               article['URL'],
                               article['Title_EN'],
@@ -117,25 +124,27 @@ def evaluation():
                             words[3],
                             words[4],
                             words[5],
-                            words[6])) \
+                            words[6],
+                            words[7])) \
         .map(lambda levels: (levels[0],
                              evaluate(levels[1]),
                              levels[2],
                              levels[3],
                              levels[4],
                              levels[5],
-                             levels[6]))
+                             levels[6],
+                             levels[7]))
 
-    out = out.toDF().select(col('_1').alias('id'), col('_2').alias('Evaluated Level'), col('_3').alias('Labeled Level'),
-                            col('_4').alias('URL'), col('_5').alias('Title_EN'), col('_6').alias('Title_ZH'),
-                            col('_7').alias('content'))
+    out = out.toDF().select(col('_1').alias('id'), col('_2').alias('Evaluated Level'), col('_3').alias('Grammar Level'),
+                            col('_4').alias('Labeled Level'), col('_5').alias('URL'), col('_6').alias('Title_EN'),
+                            col('_7').alias('Title_ZH'), col('_8').alias('content'))
 
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
-    out.toPandas().to_csv(f'../../output/full_sample/distributed/evaluated_eval_partitions.csv', index=False,
+    out.toPandas().to_csv(f'../../output/full_sample/distributed/evaluated_eval_grammar_partitions.csv', index=False,
                           sep='\t')
 
 
-def main(mode='valid'):
+def main_grammar(mode='valid'):
     """
     Core of the functionality for the 'news2016zh' dataset
 
@@ -144,6 +153,7 @@ def main(mode='valid'):
     """
     spark = utils.setup_spark()
     articles = utils.get_articles(spark, mode)
+    grammar_map = utils.get_grammar_mapping(spark)
     hsk_map = utils.get_hsk_dict(spark)
 
     if mode == 'train':
@@ -166,6 +176,7 @@ def main(mode='valid'):
     out = articles.rdd.repartition(n_partitions)\
                       .map(lambda article: (article['news_id'],
                                             [x.word for x in pseg.cut(article['content']) if x.flag not in ['x', 'eng', 'm']],
+                                            map_grammar([x for x in pseg.cut(article['content'])], grammar_map),
                                             article['time'],
                                             article['source'],
                                             article['title'],
@@ -177,53 +188,33 @@ def main(mode='valid'):
                                           words[3],
                                           words[4],
                                           words[5],
-                                          words[6])) \
+                                          words[6],
+                                          words[7])) \
                       .map(lambda levels: (levels[0],
                                            evaluate(levels[1]),
                                            levels[2],
                                            levels[3],
                                            levels[4],
                                            levels[5],
-                                           levels[6]))
+                                           levels[6],
+                                           levels[7]))
 
-    out = out.toDF().select(col('_1').alias('news_id'), col('_2').alias('level'), col('_3').alias('time'),
-                            col('_4').alias('source'), col('_5').alias('title'), col('_6').alias('keywords'),
-                            col('_7').alias('desc'))
+    out = out.toDF().select(col('_1').alias('news_id'), col('_2').alias('level'), col('_3').alias('grammar_level'),
+                            col('_4').alias('time'), col('_5').alias('source'), col('_6').alias('title'),
+                            col('_7').alias('keywords'), col('_8').alias('desc'))
 
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
-    out.toPandas().to_csv(f'../../output/full_sample/distributed/evaluated_{mode}_partitions.csv', index=False, sep='\t')
+    out.toPandas().to_csv(f'../../output/full_sample/distributed/evaluated_{mode}_grammar_partitions.csv', index=False, sep='\t')
 
 
 def run():
     mode = input('Specify mode (demo/train/valid/full): ')
     start = time.time()
     spark = utils.setup_spark()
-    main(mode)
+    main_grammar(mode)
     end = time.time()
     print(f'Duration: {(end-start)/60} min')
 
 
-def tmp_grammar_run():
-    data_list = []
-    with open('../../data/new2016zh/news2016zh_valid.json', "r", encoding="utf-8") as valid_file:
-        for entry in valid_file:
-            data = json.loads(entry)
-            data_list.append(data)
-            if len(data_list) >= 1000:
-                break
-
-    results = {}
-    for row in data_list:
-        g_lvl = map_grammar([x for x in pseg.cut(row['content'])],
-                            pd.read_csv('../../data/filtered_grammar/grammar_mapping.csv', sep='\t'))
-        results[row['news_id']] = g_lvl
-
-    with open('../../output/full_sample/grammar_test.csv', 'w', encoding='utf-8') as out:
-        out.write('news_id\tgrammar_level\n')
-        for key in results.keys():
-            out.write(f'{key}\t{results[key]}\n')
-
-
 if __name__ == '__main__':
-    # run()
-    tmp_grammar_run()
+    run()
